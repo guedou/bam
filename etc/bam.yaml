@@ -1,0 +1,20 @@
+- hosts: bam-vm
+
+  tasks:
+
+    ### Prepare packages
+    - name: "Update the apt cache if older than one day"
+      sudo: yes
+      apt: update_cache=yes cache_valid_time=86400
+
+    ### Install prerequisites
+    - name: "Ensure that necessary packages are installed"
+      apt: name={{ item }} state=present
+      sudo: yes
+      with_items:
+        - git
+        - python-flask
+
+    ### Install cousteau
+    - name: "Clone cousteau git repository"
+      git: repo=https://github.com/RIPE-NCC/ripe-atlas-cousteau.git dest=/home/vagrant/ripe-atlas-cousteau
