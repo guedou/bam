@@ -71,10 +71,17 @@
             
           </div>
 
+          <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">IPv6<sup><span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="This shows a detailed IP Routes List"></span></sup></div>
+            <!-- Table -->
+            <div class="table-responsive">
+              <table id="ipv6" class="display" cellspacing="0" width="100%">
+              </table>
+            </div>
+            
+          </div>
 
-          
-          <h2>IPv6</h2>
-          <div id="id02"></div>
           <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
           <script>
 
@@ -118,35 +125,50 @@
               var footer = "</tbody><tfooter><tr><th>IP</th><th>RRC00</th><th>RRC01</th><th>RRC03</th><th>RRC04</th><th>RRC05</th><th>RRC06</th><th>RRC07</th><th>RRC10</th><th>RRC11</th><th>RRC12</th><th>RRC13</th><th>RRC14</th><th>RRC15</th></tr></tfooter>";
 
               var outv4 = header;
-              var outv6 = "";
+              var outv6 = header;
               var i;
               var j;
               prefixes.v4.sort();
               prefixes.v6.sort();
+
+              // do the v4 Stuff
               for(i = 0; i < prefixes.v4.length; i++) {
                 var id = prefixes.v4[i].replace(/\./g,"_");
                 id = id.replace("/","-");
                 outv4 += '<tr><td id=' + id +'>' + prefixes.v4[i] + '</td>';
                 for(j = 0; j < visibility.visibilities.length; j++) {
-                  
-
+                  if (visibility.visibilities[j] != null) {
+                    outv4 += '<td>' + visibility.visibilities[j].ipv4_peer_percentage + '</td>';
+                  }
                 }
+                outv4 += '</tr>';
               }
 
+              // do the v6 Stuff
               for(i = 0; i < prefixes.v6.length; i++) {
-                  <!--out += JSON.stringify(prefixes.v4[i]) + '<br>' -->;
-                  outv6 += prefixes.v6[i] + '<br>'
+                var id = prefixes.v6[i].replace(/\:/g,"_");
+                id = id.replace("/","-");
+                outv6 += '<tr><td id=' + id +'>' + prefixes.v6[i] + '</td>';
+                for(j = 0; j < visibility.visibilities.length; j++) {
+                  if (visibility.visibilities[j] != null) {
+                    outv6 += '<td>' + visibility.visibilities[j].ipv6_peer_percentage + '</td>';
+                  }
+                }
+                outv6 += '</tr>';
               }
 
               outv4 += footer;
+              outv6 += footer;
 
               document.getElementById("ipv4").innerHTML = outv4;
-              document.getElementById("id02").innerHTML = outv6;
-              var tabelle = $('#ipv4');
+              document.getElementById("ipv6").innerHTML = outv6;
+              var v4tabelle = $('#ipv4');
+              var v6tabelle = $('#ipv6');
 
-              tabelle.DataTable();
+              v4tabelle.DataTable();
+              v6tabelle.DataTable();
 
-              console.log(tabelle);
+              //console.log(tabelle);
           }
           </script>
         </div>
