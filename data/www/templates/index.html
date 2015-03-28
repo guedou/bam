@@ -13,6 +13,7 @@
 
     <!-- Bootstrap core CSS -->
     <link href="static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//cdn.datatables.net/1.10.5/css/jquery.dataTables.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="static/dashboard.css" rel="stylesheet">
@@ -63,19 +64,20 @@
             <div class="panel-heading">IPv4<sup><span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="This shows a detailed IP Routes List"></span></sup></div>
             <!-- Table -->
             <div class="table-responsive">
-              <table class="table table-hover" id="id01">
+              <table id="ipv4" class="display" cellspacing="0" width="100%">
               </table>
             </div>
+            
           </div>
 
 
           
           <h2>IPv6</h2>
           <div id="id02"></div>
-
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
           <script>
 
-          var xmlhttp = new XMLHttpRequest();
+/*         var xmlhttp = new XMLHttpRequest();
           var url = "../get_prefixes";
 
           xmlhttp.onreadystatechange = function() {
@@ -85,26 +87,60 @@
               }
           }
           xmlhttp.open("GET", url, true);
-          xmlhttp.send();
+          xmlhttp.send();*/
 
-          function myFunction(arr) {
-              var outv4 = "";
+
+          $.ajax({
+            method: "GET",
+            url: "../get_prefixes"
+            
+          })
+            .done(function( msg ) {
+              //alert( "Data Saved: " + msg );
+              var myArr = JSON.parse(msg);
+              $.ajax({
+                method: "GET",
+                url: "../get_visibility"
+                
+              })
+                .done(function( msg ) {
+                  //alert( "Data Saved: " + msg );
+                  var myArr2 = JSON.parse(msg);
+                  myFunction(myArr,myArr2);
+                });
+              
+            });
+
+          function myFunction(prefixes,visibility) {
+
+              var header = "<thead><tr><th>IP</th></tr></thead><tbody>";
+              var footer = "</tbody><tfooter><tr><th>IP</th></tr></tfooter>";
+
+              var outv4 = header;
               var outv6 = "";
               var i;
-              arr.v4.sort();
-              arr.v6.sort();
-              for(i = 0; i < arr.v4.length; i++) {
-      
-                  outv4 += '<tr><td>' + arr.v4[i] + '</td></tr>'
+              prefixes.v4.sort();
+              prefixes.v6.sort();
+              for(i = 0; i < prefixes.v4.length; i++) {
+                var id = prefixes.v4[i].replace(/./g,"_");
+                id = id.replace("/","-");
+                outv4 += '<tr><td id=' + id +'>' + prefixes.v4[i] + '</td></tr>'
               }
 
-              for(i = 0; i < arr.v6.length; i++) {
-                  <!--out += JSON.stringify(arr.v4[i]) + '<br>' -->;
-                  outv6 += arr.v6[i] + '<br>'
+              for(i = 0; i < prefixes.v6.length; i++) {
+                  <!--out += JSON.stringify(prefixes.v4[i]) + '<br>' -->;
+                  outv6 += prefixes.v6[i] + '<br>'
               }
 
-              document.getElementById("id01").innerHTML = outv4;
+              outv4 += footer;
+
+              document.getElementById("ipv4").innerHTML = outv4;
               document.getElementById("id02").innerHTML = outv6;
+              var tabelle = $('#ipv4');
+
+              tabelle.DataTable();
+
+              console.log(tabelle);
           }
           </script>
         </div>
@@ -114,7 +150,8 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script src="bootstrap/js/bootstrap.min.js"></script>
+    
+    <script src="static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.5/js/jquery.dataTables.min.js"></script>
   </body>
 </html>
