@@ -18,7 +18,24 @@
         - python-mechanize
         - python-requests
         - python-prettytable
+        - python-setuptools
 
     ### Install cousteau
     - name: "Clone cousteau git repository"
       git: repo=https://github.com/RIPE-NCC/ripe-atlas-cousteau.git dest=/home/vagrant/ripe-atlas-cousteau
+
+    ### Install flask-cache
+    - name: "Clone flask-cache git repository"
+      git: repo=https://github.com/thadeusb/flask-cache.git dest=/home/vagrant/flask-cache
+
+    ### Set the PYTHONPATH variable
+    - name: "Set the PYTHONPATH variable"
+      lineinfile: dest=/home/vagrant/.profile line="export PYTHONPATH=/home/vagrant/ripe-atlas-cousteau/:/home/vagant/flask-cache/" create=yes
+
+    ### Set the PYTHONPATH variable
+    - name: "Set the PYTHONPATH variable"
+      lineinfile: dest=/home/vagrant/.profile line="export PYTHONPATH=/home/vagrant/ripe-atlas-cousteau/:/home/vagrant/flask-cache/" create=yes
+
+    ### Move to /vagrant on login
+    - name: "Move to /vagrant on login"
+      lineinfile: dest=/home/vagrant/.profile line="cd /vagrant/" create=yes

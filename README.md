@@ -16,7 +16,6 @@ host $ vagrant up
 
 host $ vagrant ssh -- -L 2807:localhost:5000
 
-guest$ cd /vagrant
 guest$ python bam.py YOUR_ASN
 
 Open a browser on your vagrant host to http://localhost:2807
