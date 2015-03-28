@@ -35,6 +35,12 @@ def flask_map_probes():
 
   return lib.www.pages.map_probes(app.config["CONFIG"])
 
+@app.route("/map/collectors")
+def flask_map_collectors():
+  """Display a map with the collectors"""
+
+  return lib.www.pages.map_collectors(app.config["CONFIG"])
+
 
 @app.route("/get_prefixes")
 @app.route("/get_prefixes/<int:asn>")
@@ -113,6 +119,7 @@ if __name__ == '__main__':
   # Global config
   config = {}
   config["asn"] = args.asn
+  config["GMAP_API_KEY"] = "AIzaSyB_W78hb9jKfyvbZiFPcsgTLF2WM5Az5Ho"
 
   # Configure Flask
   app.config["CONFIG"] = config

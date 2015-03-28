@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <style type="text/css">
+      html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
+    </style>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={{ api_key }} ">
+    </script>
+    <script type="text/javascript">
+      function initialize() {
+
+        // Prepare the map
+        var mapOptions = {
+          center: { lat: {{ latitude }}, lng: {{ longitude }}},
+          zoom: {{ zoom }}
+        };
+        var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+{% for marker in markers %}
+
+        // Add a circle
+        var content{{ marker["id"] }} = "{{ marker["content"] }}";
+        var infowindow{{ marker["id"] }} = new google.maps.InfoWindow({ content: content{{ marker["id"] }} 
+        });
+        var latlng{{ marker["id"] }} = new google.maps.LatLng({{ marker["latitude"] }}, {{ marker["longitude"] }});
+
+        var outer_circle_options{{ marker["id"] }} = {
+          strokeColor: '#00FF00',
+          fillColor: '#00FF00',
+          fillOpacity: 1,
+          map: map,
+          center: latlng{{ marker["id"] }},
+          radius: {{ radius }},
+          clickable: true,
+          fillOpacity: 0.5,
+          strokeOpacity: 0.5,
+          title: "bla"
+        };
+        var outer_circle{{ marker["id"] }} = new google.maps.Circle(outer_circle_options{{ marker["id"] }});
+        google.maps.event.addListener(outer_circle{{ marker["id"] }}, 'click', function(ev){
+            infowindow{{ marker["id"] }}.setPosition(outer_circle{{ marker["id"] }}.getCenter());
+            infowindow{{ marker["id"] }}.open(map, outer_circle{{ marker["id"] }});
+        });
+
+{% endfor %}
+
+      }
+
+      // Load the map
+      google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+  </head>
+
+  <body>
+    <div id="map-canvas"></div>
+  </body>
+</html>
