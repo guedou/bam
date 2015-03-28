@@ -21,3 +21,6 @@ $ python lib/tools/get_announced_prefixes.py 202214
 
 ### Display an ASN visibility
 $ python lib/tools/get_visiiblity.py 202214
+
+### List probes of an AS
+$ python lib/tools/get_probes.py 202214
