@@ -17,6 +17,7 @@
 
     <!-- Custom styles for this template -->
     <link href="static/dashboard.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -82,7 +83,6 @@
             
           </div>
 
-          <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
           <script>
 
 /*         var xmlhttp = new XMLHttpRequest();
@@ -138,7 +138,7 @@
                 outv4 += '<tr><td id=' + id +'>' + prefixes.v4[i] + '</td>';
                 for(j = 0; j < visibility.visibilities.length; j++) {
                   if (visibility.visibilities[j] != null) {
-                    outv4 += '<td id=' + id +'_RC'+ visibility.visibilities[j].name +'>' + visibility.visibilities[j].ipv4_peer_percentage + '</td>';
+                    outv4 += '<td style="padding:0px;" id=' + id +'_RC'+ visibility.visibilities[j].name +'>' + visibility.visibilities[j].ipv4_peer_percentage + '</td>';
                   }
                 }
                 outv4 += '</tr>';
@@ -151,7 +151,7 @@
                 outv6 += '<tr><td id=' + id +'>' + prefixes.v6[i] + '</td>';
                 for(j = 0; j < visibility.visibilities.length; j++) {
                   if (visibility.visibilities[j] != null) {
-                    outv6 += '<td id=' + id +'_RC'+ visibility.visibilities[j].name +'>' + visibility.visibilities[j].ipv6_peer_percentage + '</td>';
+                    outv6 += '<td  style="padding:0px;" id=' + id +'_RC'+ visibility.visibilities[j].name +'>' + visibility.visibilities[j].ipv6_peer_percentage + '</td>';
                   }
                 }
                 outv6 += '</tr>';
@@ -165,8 +165,33 @@
               var v4tabelle = $('#ipv4');
               var v6tabelle = $('#ipv6');
 
-              v4tabelle.DataTable();
-              v6tabelle.DataTable();
+              v4tabelle.DataTable(
+              {"columnDefs": [ 
+                {
+                  "render": function ( data, type, row ) {
+                    value = Math.round(data*37);
+                    other_value = 37 - value;
+                    return '<table border=0 cellspacing=0 cellpadding=0 style="width:100%;"><tr><td style="padding:0px;"><div style="width:100%;height:'+ other_value +'px;padding:0px;background-color:white;"></div></td></tr><tr><td  style="padding:0px;"><div style="width:100%;height:'+ value +'px;padding:0px;background-color:#a1d775;"></div></td></tr></table>';
+                  },
+                "targets": [1,2,3,4,5,6,7,8,9,10,11,12,13]
+                }
+                ]
+              }
+          );
+              v6tabelle.DataTable(
+              {"columnDefs": [ 
+                {
+                  "render": function ( data, type, row ) {
+                    value = Math.round(data*37);
+                    other_value = 37 - value;
+                    return '<table border=0 cellspacing=0 cellpadding=0 style="width:100%;"><tr><td  style="padding:0px;"><div style="width:82px;height:'+ other_value +'px;padding:0px;background-color:white;"></div></td></tr><tr><td  style="padding:0px;"><div style="width:100%;height:'+ value +'px;padding:0px;background-color:#a1d775;"></div></td></tr></table>';
+                  },
+                "targets": [1,2,3,4,5,6,7,8,9,10,11,12,13]
+                }
+                ]
+              }
+
+          );
 
               //console.log(tabelle);
           }
