@@ -27,6 +27,7 @@ def get_visibility(asn):
 
       doc = {}
       doc["city"] = rrc["probe"]["city"]
+      doc["name"] = rrc["probe"]["name"]
       doc["latitude"] = rrc["probe"]["latitude"]
       doc["longitude"] = rrc["probe"]["longitude"]
       doc["ipv4_peer_percentage"] = ipv4_peer_percentage
@@ -54,8 +55,8 @@ if __name__ == "__main__":
     print >> sys.stderr, "Can't retrieve data !"
     sys.exit(1)
 
-  table = PrettyTable(["City", "IPv4 peers visibility %", "IPv6 peers visibility %"])
+  table = PrettyTable(["Collector", "IPv4 peers visibility %", "IPv6 peers visibility %"])
   for visibility in data:
-    table.add_row([visibility["city"], visibility["ipv4_peer_percentage"]*100, visibility["ipv6_peer_percentage"]*100])
+    table.add_row([" - ".join([visibility["name"], visibility["city"]]), visibility["ipv4_peer_percentage"]*100, visibility["ipv6_peer_percentage"]*100])
   print table
  
