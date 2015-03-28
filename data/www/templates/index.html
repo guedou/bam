@@ -51,12 +51,13 @@
 
     <div class="container-fluid">
       <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
+        <!-- <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
             <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
           </ul>
-        </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        </div> -->
+        <!-- <div class="col-sm-9 col-sm-offset-3 col-md-12 col-md-offset-2 main">-->
+        <div class="col-sm-9 col-md-12 main">
           <h1 class="page-header">Dashboard for AS{{ asn }}</h1>
   
           <div class="panel panel-default">
@@ -113,18 +114,23 @@
 
           function myFunction(prefixes,visibility) {
 
-              var header = "<thead><tr><th>IP</th></tr></thead><tbody>";
-              var footer = "</tbody><tfooter><tr><th>IP</th></tr></tfooter>";
+              var header = "<thead><tr><th>IP</th><th>RRC00</th><th>RRC01</th><th>RRC03</th><th>RRC04</th><th>RRC05</th><th>RRC06</th><th>RRC07</th><th>RRC10</th><th>RRC11</th><th>RRC12</th><th>RRC13</th><th>RRC14</th><th>RRC15</th></tr></thead><tbody>";
+              var footer = "</tbody><tfooter><tr><th>IP</th><th>RRC00</th><th>RRC01</th><th>RRC03</th><th>RRC04</th><th>RRC05</th><th>RRC06</th><th>RRC07</th><th>RRC10</th><th>RRC11</th><th>RRC12</th><th>RRC13</th><th>RRC14</th><th>RRC15</th></tr></tfooter>";
 
               var outv4 = header;
               var outv6 = "";
               var i;
+              var j;
               prefixes.v4.sort();
               prefixes.v6.sort();
               for(i = 0; i < prefixes.v4.length; i++) {
-                var id = prefixes.v4[i].replace(/./g,"_");
+                var id = prefixes.v4[i].replace(/\./g,"_");
                 id = id.replace("/","-");
-                outv4 += '<tr><td id=' + id +'>' + prefixes.v4[i] + '</td></tr>'
+                outv4 += '<tr><td id=' + id +'>' + prefixes.v4[i] + '</td>';
+                for(j = 0; j < visibility.visibilities.length; j++) {
+                  
+
+                }
               }
 
               for(i = 0; i < prefixes.v6.length; i++) {
