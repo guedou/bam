@@ -7,14 +7,19 @@ def get_probes (asn):
 
     r = requests.get (url)
 
-    data_json = json.loads(r.content)
-	
+    try:
+        data_json = json.loads(r.content)
+    except ValueError:
+        print 'get_probes.py : JSon unreadable'	
+
     probes_list = []
     for probe in data_json["data"]["probes"]:
         if probe["status"] == 1:
             if 'address_v4' not in probe:
                 probe['address_v4'] = 'Unknown'
-            probes_list.append({'id':probe['id'], 'country_code':probe['country_code'], 'ipv4':probe['address_v4'], 'latitude':probe['latitude'], 'longitude':probe['longitude']})
+            if 'address_v6' not in probe:
+                probe['address_v6'] = 'Unknown'
+            probes_list.append({'id':probe['id'], 'country_code':probe['country_code'], 'ipv4':probe['address_v4'], 'ipv6':probe['address_v6'], 'latitude':probe['latitude'], 'longitude':probe['longitude']})
         
     return probes_list
 
@@ -29,7 +34,7 @@ if __name__ == "__main__":
 
     probes_list = get_probes (args.asn)
 
-    table = PrettyTable(["ID", "IPv4", "Country", "Latitude", "longitude"])
+    table = PrettyTable(["ID", "IPv4", "IPv6", "Country", "Latitude", "longitude"])
     for probe in probes_list:
-        table.add_row([probe['id'], probe['ipv4'], probe['country_code'], probe['latitude'], probe['longitude']])
+        table.add_row([probe['id'], probe['ipv4'], probe['ipv6'], probe['country_code'], probe['latitude'], probe['longitude']])
     print table
