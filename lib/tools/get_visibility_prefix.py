@@ -20,7 +20,7 @@ def get_visibility_prefix(prefix):
   if ":" in addr_type:
     addr_type = "v6"
 
-  ret = []
+  ret = [None] * 16
   for rrc in data["data"]["visibilities"]:
       full_table_peer_count = rrc["ip%s_full_table_peer_count" % addr_type]
       full_table_peers_not_seeing_count = len(rrc["ip%s_full_table_peers_not_seeing" % addr_type])
@@ -29,12 +29,15 @@ def get_visibility_prefix(prefix):
 
       doc = {}
       doc["city"] = rrc["probe"]["city"]
+      doc["name"] = rrc["probe"]["name"]
       doc["latitude"] = rrc["probe"]["latitude"]
       doc["longitude"] = rrc["probe"]["longitude"]
       doc["peer_percentage"] = peer_percentage
       doc["peers_not_seeing"] = rrc["ip%s_full_table_peers_not_seeing" % addr_type]
 
-      ret += [ doc ]
+      rrc_id = int(doc["name"][3:])
+
+      ret[rrc_id] = doc
 
   return ret
 
@@ -54,8 +57,10 @@ if __name__ == "__main__":
     print >> sys.stderr, "Can't retrieve data !"
     sys.exit(1)
 
-  table = PrettyTable(["City", "Peers visibility %"])
+  table = PrettyTable(["Collector", "Peers visibility %"])
   for visibility in data:
-    table.add_row([visibility["city"], visibility["peer_percentage"]*100])
+    if not visibility:
+      continue
+    table.add_row([" - ".join([visibility["name"], visibility["city"]]), visibility["peer_percentage"]*100])
   print table
  
