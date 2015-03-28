@@ -1,8 +1,8 @@
 # Retrieve the visibilty information
 
-import requests, json
+import requests, json, random
 
-def get_visibility(asn):
+def get_visibility(asn, random_data=False):
   """Return a JSON document representing the visibility of an AS from each RIS collector."""
 
   URL = "https://stat.ripe.net/data/visibility/data.json?resource=%d" % asn
@@ -34,6 +34,17 @@ def get_visibility(asn):
       doc["ipv6_peer_percentage"] = ipv6_peer_percentage
       doc["ipv6_peers_not_seeing"] = rrc["ipv6_full_table_peers_not_seeing"]
       doc["ipv4_peers_not_seeing"] = rrc["ipv4_full_table_peers_not_seeing"]
+
+      if doc["ipv4_peer_percentage"] == 1.0 and doc["ipv6_peer_percentage"] == 1.0:
+        doc["color"] = "#00FF00"
+      elif doc["ipv4_peer_percentage"] == 0.0 and doc["ipv6_peer_percentage"] == 0.0:
+        doc["color"] = "#FF0000"
+      else:
+        doc["color"] = "#FFA500"
+
+      if random_data:
+        index = random.randint(0, 2)
+        doc["color"] = ["#00FF00", "#FF0000", "#FFA500"][index]
 
       rrc_id = int(doc["name"][3:])
 

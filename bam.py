@@ -66,7 +66,8 @@ def flask_get_visibility(asn=None):
   if asn == None:
     asn = app.config["CONFIG"]["asn"]
 
-  visibilities = get_visibility(asn)
+  random_data = app.config["CONFIG"].get("RANDOM_DATA", False)
+  visibilities = get_visibility(asn, random_data)
 
   doc = {}
   doc["asn"] = asn
@@ -98,7 +99,8 @@ def flask_get_probes(asn=None):
   if asn == None:
     asn = app.config["CONFIG"]["asn"]
 
-  probes = get_probes(asn)
+  random_data = app.config["CONFIG"].get("RANDOM_DATA", False)
+  probes = get_probes(asn, random_data)
 
   doc = {}
   doc["asn"] = asn
@@ -113,6 +115,7 @@ if __name__ == '__main__':
   parser = argparse.ArgumentParser("BGP Atlas Monitor")
   parser.add_argument("-t", "--timeout", dest="timeout", type=int, default=60, help="The cache timeout")
   parser.add_argument("-d", "--debug", dest="debug", action="store_true", default=False, help="Run in debug mode")
+  parser.add_argument("-r", "--random", dest="random", action="store_true", default=False, help="Generate random data")
   parser.add_argument("asn", type=int, help="The AS number that will be monitored")
   args = parser.parse_args()
 
@@ -120,6 +123,7 @@ if __name__ == '__main__':
   config = {}
   config["asn"] = args.asn
   config["GMAP_API_KEY"] = "AIzaSyB_W78hb9jKfyvbZiFPcsgTLF2WM5Az5Ho"
+  config["RANDOM_DATA"] = args.random
 
   # Configure Flask
   app.config["CONFIG"] = config
