@@ -58,7 +58,10 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Dashboard</h1>
 
+          <h2>IPv4</h2>
           <div id="id01"></div>
+          <h2>IPv6</h2>
+          <div id="id02"></div>
 
           <script>
           var xmlhttp = new XMLHttpRequest();
@@ -74,13 +77,23 @@
           xmlhttp.send();
 
           function myFunction(arr) {
-              var out = "";
+              var outv4 = "";
+              var outv6 = "";
               var i;
-              for(i = 0; i < arr.length; i++) {
-                  <!--out += JSON.stringify(arr[i]) + '<br>' -->;
-                  out += arr[i] + '<br>'
+              arr.v4.sort();
+              arr.v6.sort();
+              for(i = 0; i < arr.v4.length; i++) {
+                  <!--out += JSON.stringify(arr.v4[i]) + '<br>' -->;
+                  outv4 += arr.v4[i] + '<br>'
               }
-              document.getElementById("id01").innerHTML = out;
+
+              for(i = 0; i < arr.v6.length; i++) {
+                  <!--out += JSON.stringify(arr.v4[i]) + '<br>' -->;
+                  outv6 += arr.v6[i] + '<br>'
+              }
+
+              document.getElementById("id01").innerHTML = outv4;
+              document.getElementById("id02").innerHTML = outv6;
           }
           </script>
         </div>
