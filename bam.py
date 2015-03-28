@@ -5,6 +5,7 @@ import flask
 
 import lib.www.pages
 from lib.tools.get_announced_prefixes import *
+from lib.tools.get_visibility import *
 
 
 # The Flask application
@@ -14,20 +15,30 @@ app = flask.Flask(__name__,
                   static_url_path="/static")
 
 @app.route("/")
-def index():
+def flask_index():
   """BAM index"""
 
   return lib.www.pages.index(app.config["CONFIG"]["asn"])
 
 
 @app.route("/get_prefixes")
-def get_prefixes():
-  """Return the list of prefixes as seen by RIPe stat"""
+def flask_get_prefixes():
+  """Return the list of prefixes as seen by RIPE stat"""
 
   asn = app.config["CONFIG"]["asn"]
   prefixes = get_announced_prefixes(asn)
 
   return json.dumps(prefixes)
+
+
+@app.route("/get_visibility")
+def flask_get_visibility():
+  """Return the visibility as seen by RIPE stat."""
+
+  asn = app.config["CONFIG"]["asn"]
+  visibility = get_visibility(asn)
+
+  return json.dumps(visibility)
 
 
 if __name__ == '__main__':
