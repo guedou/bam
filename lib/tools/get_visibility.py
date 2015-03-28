@@ -13,7 +13,7 @@ def get_visibility(asn):
     print e
     return None
 
-  ret = []
+  ret = [None] * 16
   for rrc in data["data"]["visibilities"]:
       ipv4_full_table_peer_count = rrc["ipv4_full_table_peer_count"]
       ipv4_full_table_peers_not_seeing_count = len(rrc["ipv4_full_table_peers_not_seeing"])
@@ -35,7 +35,9 @@ def get_visibility(asn):
       doc["ipv6_peers_not_seeing"] = rrc["ipv6_full_table_peers_not_seeing"]
       doc["ipv4_peers_not_seeing"] = rrc["ipv4_full_table_peers_not_seeing"]
 
-      ret += [ doc ]
+      rrc_id = int(doc["name"][3:])
+
+      ret[rrc_id] = doc
 
   return ret
 
@@ -57,6 +59,8 @@ if __name__ == "__main__":
 
   table = PrettyTable(["Collector", "IPv4 peers visibility %", "IPv6 peers visibility %"])
   for visibility in data:
+    if not visibility:
+      continue
     table.add_row([" - ".join([visibility["name"], visibility["city"]]), visibility["ipv4_peer_percentage"]*100, visibility["ipv6_peer_percentage"]*100])
   print table
  
