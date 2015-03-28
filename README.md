@@ -14,6 +14,10 @@ guest$ python bam.py YOUR_ASN
 Open Browser on Vagrant Host System to http://localhost:2807
 
 
-# lib/tools
+## Command line tools
 
-get_announced_prefixes.py : returns a list of the announced prefixes of an AS
+### List the announced prefixes
+$ python lib/tools/get_announced_prefixes.py 202214
+
+### Display an ASN visibility
+$ python lib/tools/get_visiiblity.py 202214
