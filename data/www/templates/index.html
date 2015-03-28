@@ -218,6 +218,8 @@
               }).get();
 
               for(i = 0; i < v6tabelle.length-1; i++) {
+                if (v6tabelle[i].prefix == "")
+                  continue;
                 console.log(v6tabelle[i]);
 
                 $.ajax({
