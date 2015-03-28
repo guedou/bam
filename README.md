@@ -4,10 +4,9 @@ Hello RIPE Atlas Hackathon !
 
 ## Launch the server
 
-guest$ vagrant box add https://vagrantcloud.com/chef/boxes/debian-7.6
+host $ vagrant up
 
-guest$ vagrant up
+host $ vagrant ssh -- -L 2807:localhost:5000
 
-guest$ vagrant ssh -- -L 2807:localhost:5000
-
-host $ python bam.py YOUR_ASN
+guest$ cd /vagrant
+guest$ python bam.py YOUR_ASN
