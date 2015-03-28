@@ -14,6 +14,7 @@
       with_items:
         - git
         - python-flask
+        - python-dateutil
 
     ### Install cousteau
     - name: "Clone cousteau git repository"
