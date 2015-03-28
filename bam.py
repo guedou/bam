@@ -18,7 +18,7 @@ app = flask.Flask(__name__,
 def flask_index():
   """BAM index"""
 
-  return lib.www.pages.index(app.config["CONFIG"]["asn"])
+  return lib.www.pages.index(app.config["CONFIG"])
 
 
 @app.route("/get_prefixes")
