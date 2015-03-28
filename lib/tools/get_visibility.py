@@ -31,6 +31,8 @@ def get_visibility(asn):
       doc["longitude"] = rrc["probe"]["longitude"]
       doc["ipv4_peer_percentage"] = ipv4_peer_percentage
       doc["ipv6_peer_percentage"] = ipv6_peer_percentage
+      doc["ipv6_peers_not_seeing"] = rrc["ipv6_full_table_peers_not_seeing"]
+      doc["ipv4_peers_not_seeing"] = rrc["ipv4_full_table_peers_not_seeing"]
 
       ret += [ doc ]
 
