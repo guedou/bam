@@ -2,16 +2,23 @@
 
 Hello RIPE Atlas Hackathon !
 
-## Launch the server
+## Try it yourself 
+
+BAM is packaged to be easily tested using vagrant. On your host, you will only
+need to install vagrant, ansible and virtualbox.
+
+On Debian, you can install these packages using the following command line:
+host# apt-get install ansible virtualbox vagrant
+
+Use the following commands to prepare a BAM installation:
 
 host $ vagrant up
 
 host $ vagrant ssh -- -L 2807:localhost:5000
 
-guest$ cd /vagrant
 guest$ python bam.py YOUR_ASN
 
-Open Browser on Vagrant Host System to http://localhost:2807
+Open a browser on your vagrant host to http://localhost:2807
 
 
 ## Command line tools

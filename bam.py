@@ -1,7 +1,10 @@
 # BGP Atlas Monitor
 
 import argparse, os, json
-import flask
+from flask import Flask
+from flask.ext.cache import Cache
+
+
 
 import lib.www.pages
 from lib.tools.get_announced_prefixes import *
@@ -9,10 +12,11 @@ from lib.tools.get_visibility import *
 
 
 # The Flask application
-app = flask.Flask(__name__,
-                  template_folder="data/www/templates/",
-                  static_folder="data/www/static/",
-                  static_url_path="/static")
+app = Flask(__name__,
+            template_folder="data/www/templates/",
+            static_folder="data/www/static/",
+            static_url_path="/static")
+cache = Cache(app,config={'CACHE_TYPE': 'simple'})
 
 @app.route("/")
 def flask_index():
@@ -23,6 +27,7 @@ def flask_index():
 
 @app.route("/get_prefixes")
 @app.route("/get_prefixes/<int:asn>")
+@cache.cached(timeout=60)
 def flask_get_prefixes(asn=None):
   """Return the list of prefixes as seen by RIPE stat"""
 
@@ -37,6 +42,7 @@ def flask_get_prefixes(asn=None):
 
 @app.route("/get_visibility")
 @app.route("/get_visibility/<int:asn>")
+@cache.cached(timeout=60)
 def flask_get_visibility(asn=None):
   """Return the visibility as seen by RIPE stat."""
 
