@@ -4,6 +4,7 @@ import argparse, os, json
 import flask
 
 import lib.www.pages
+from lib.tools.get_announced_prefixes import *
 
 
 # The Flask application
@@ -16,14 +17,17 @@ app = flask.Flask(__name__,
 def index():
   """BAM index"""
 
-  return lib.www.pages.index(app.config["CONFIG"])
+  return lib.www.pages.index(app.config["CONFIG"]["asn"])
 
 
 @app.route("/get_prefixes")
 def get_prefixes():
-  """Get the list of prefixes"""
+  """Return the list of prefixes as seen by RIPe stat"""
 
-  return json.dumps(["192.168.0/24", "172.16.28.0/24"])
+  asn = app.config["CONFIG"]["asn"]
+  prefixes = get_announced_prefixes(asn)
+
+  return json.dumps(prefixes)
 
 
 if __name__ == '__main__':
