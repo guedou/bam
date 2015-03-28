@@ -31,7 +31,7 @@ def flask_index():
 
 @app.route("/get_prefixes")
 @app.route("/get_prefixes/<int:asn>")
-@cache.cached(timeout=60)
+@cache.cached()
 def flask_get_prefixes(asn=None):
   """Return the list of prefixes as seen by RIPE stat"""
 
@@ -46,7 +46,7 @@ def flask_get_prefixes(asn=None):
 
 @app.route("/get_visibility")
 @app.route("/get_visibility/<int:asn>")
-@cache.cached(timeout=60)
+@cache.cached()
 def flask_get_visibility(asn=None):
   """Return the visibility of an AS as seen by RIPE stat."""
 
@@ -63,7 +63,7 @@ def flask_get_visibility(asn=None):
 
 
 @app.route("/get_visibility_prefix/<path:prefix>")
-@cache.cached(timeout=60)
+@cache.cached()
 def flask_get_visibility_prefix(prefix):
   """Return the visibility of a prefix as seen by RIPE stat."""
 
@@ -78,7 +78,7 @@ def flask_get_visibility_prefix(prefix):
 
 @app.route("/get_probes")
 @app.route("/get_probes/<int:asn>")
-@cache.cached(timeout=60)
+@cache.cached()
 def flask_get_probes(asn=None):
   """Return the probes contained in an ASN."""
 
@@ -98,6 +98,7 @@ if __name__ == '__main__':
 
   # Parse command line options
   parser = argparse.ArgumentParser("BGP Atlas Monitor")
+  parser.add_argument("-t", "--timeout", dest="timeout", type=int, default=60, help="The cache timeout")
   parser.add_argument("-d", "--debug", dest="debug", action="store_true", default=False, help="Run in debug mode")
   parser.add_argument("asn", type=int, help="The AS number that will be monitored")
   args = parser.parse_args()
@@ -111,6 +112,7 @@ if __name__ == '__main__':
   app.config["DEBUG"] = args.debug
   app.config["CSRF_ENABLED"] = True
   app.config["SECRET_KEY"] = os.urandom(128)
+  app.config["CACHE_DEFAULT_TIMEOUT"] = args.timeout
 
   # Start Flask
   app.run()
