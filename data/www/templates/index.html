@@ -57,13 +57,24 @@
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Dashboard for AS{{ asn }}</h1>
+  
+          <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">IPv4<sup><span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="This shows a detailed IP Routes List"></span></sup></div>
+            <!-- Table -->
+            <div class="table-responsive">
+              <table class="table table-hover" id="id01">
+              </table>
+            </div>
+          </div>
 
-          <h2>IPv4</h2>
-          <div id="id01"></div>
+
+          
           <h2>IPv6</h2>
           <div id="id02"></div>
 
           <script>
+
           var xmlhttp = new XMLHttpRequest();
           var url = "../get_prefixes";
 
@@ -83,8 +94,8 @@
               arr.v4.sort();
               arr.v6.sort();
               for(i = 0; i < arr.v4.length; i++) {
-                  <!--out += JSON.stringify(arr.v4[i]) + '<br>' -->;
-                  outv4 += arr.v4[i] + '<br>'
+      
+                  outv4 += '<tr><td>' + arr.v4[i] + '</td></tr>'
               }
 
               for(i = 0; i < arr.v6.length; i++) {
