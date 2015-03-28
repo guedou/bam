@@ -5,7 +5,6 @@ import argparse
 
 def get_announced_prefixes (asn):
 	url = 'https://stat.ripe.net/data/announced-prefixes/data.json?resource=AS'+str(asn)
-	print url
 
 	br = mechanize.Browser()
 
@@ -28,4 +27,5 @@ if __name__ == "__main__":
 	parser.add_argument("asn", type=int, help="The AS number that wil be monitored")
 	args = parser.parse_args()
 
-	print get_announced_prefixes (args.asn)
+        for prefix in get_announced_prefixes (args.asn):
+          print prefix
