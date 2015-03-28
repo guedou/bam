@@ -7,7 +7,7 @@ def get_probes (asn):
 
     r = requests.get (url)
 
-    data_json = r.json()
+    data_json = json.loads(r.content)
 	
     probes_list = []
     for probe in data_json["data"]["probes"]:
