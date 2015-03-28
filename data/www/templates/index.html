@@ -119,6 +119,11 @@
               
             });
 
+
+
+            var timerId = setInterval(timerMethod, 1000);    //60,000 milliseconds
+
+
           function myFunction(prefixes,visibility) {
 
               var header = "<thead><tr><th>IP</th><th>RRC00</th><th>RRC01</th><th>RRC03</th><th>RRC04</th><th>RRC05</th><th>RRC06</th><th>RRC07</th><th>RRC10</th><th>RRC11</th><th>RRC12</th><th>RRC13</th><th>RRC14</th><th>RRC15</th></tr></thead><tbody>";
@@ -138,7 +143,7 @@
                 outv4 += '<tr><td id=' + id +'>' + prefixes.v4[i] + '</td>';
                 for(j = 0; j < visibility.visibilities.length; j++) {
                   if (visibility.visibilities[j] != null) {
-                    outv4 += '<td>' + visibility.visibilities[j].ipv4_peer_percentage + '</td>';
+                    outv4 += '<td id=' + id +'_RC'+ visibility.visibilities[j].name +'>' + visibility.visibilities[j].ipv4_peer_percentage + '</td>';
                   }
                 }
                 outv4 += '</tr>';
@@ -151,7 +156,7 @@
                 outv6 += '<tr><td id=' + id +'>' + prefixes.v6[i] + '</td>';
                 for(j = 0; j < visibility.visibilities.length; j++) {
                   if (visibility.visibilities[j] != null) {
-                    outv6 += '<td>' + visibility.visibilities[j].ipv6_peer_percentage + '</td>';
+                    outv6 += '<td id=' + id +'_RC'+ visibility.visibilities[j].name +'>' + visibility.visibilities[j].ipv6_peer_percentage + '</td>';
                   }
                 }
                 outv6 += '</tr>';
@@ -169,6 +174,51 @@
               v6tabelle.DataTable();
 
               //console.log(tabelle);
+          }
+
+          function timerMethod() {
+              var v4tabelle = $('#ipv4');
+              var i;
+
+
+              var v6tabelle = $('#ipv6 tbody tr').map(function() {
+                // $(this) is used more than once; cache it for performance.
+                var $row = $(this);
+               
+                // For each row that's "mapped", return an object that
+                //  describes the first and second <td> in the row.
+                return {
+                  prefix: $row.find(':nth-child(1)').text()
+                };
+              }).get();
+
+              for(i = 0; i < v6tabelle.length-1; i++) {
+                console.log(v6tabelle[i]);
+
+                $.ajax({
+                  method: "GET",
+                  url: '../get_visibility_prefix/' + v6tabelle[i].prefix
+                })
+                  .done(function( msg ) {
+                    //alert( "Data Saved: " + msg );
+                    var myArr = JSON.parse(msg);
+                    console.log(myArr);
+                    //changeTableCell(v6tabelle[i].prefix, myArr);
+                  });
+              }
+          function changeTableCell(prefix, visibility_prefix) {
+              var v6tabelle = $('#ipv6');
+              var id = prefix.replace(/\:/g,"_");
+              id = id.replace("/","-");
+
+              if (v6tabelle.cell('#id').data != visibility_prefix.ipv6_peer_percentage) {
+
+              }
+
+
+          }
+
+              
           }
           </script>
         </div>
