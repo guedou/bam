@@ -20,11 +20,7 @@ def get_announced_prefixes (asn):
 
 	json_data = json.loads(data)
 
-	prefixes_list = []
-	for p in json_data["data"]["prefixes"]:
-		prefixes_list.append(p["prefix"])
-
-	print prefixes_list
+	return map(lambda x : x["prefix"], json_data["data"]["prefixes"])
 
 if __name__ == "__main__":
     
@@ -32,4 +28,4 @@ if __name__ == "__main__":
 	parser.add_argument("asn", type=int, help="The AS number that wil be monitored")
 	args = parser.parse_args()
 
-	get_announced_prefixes (args.asn)
+	print get_announced_prefixes (args.asn)
