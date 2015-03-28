@@ -9,5 +9,3 @@ guest$ vagrant up
 guest$ vagrant ssh -- -L 2807:localhost:5000
 
 host $ python bam.py YOUR_ASN
-
-# Permission test
