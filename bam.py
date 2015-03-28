@@ -32,7 +32,7 @@ def flask_get_prefixes(asn=None):
   doc = get_announced_prefixes(asn)
   doc["asn"] = asn
 
-  return json.dumps(prefixes)
+  return json.dumps(doc)
 
 
 @app.route("/get_visibility")
