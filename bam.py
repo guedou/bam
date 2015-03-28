@@ -22,23 +22,34 @@ def flask_index():
 
 
 @app.route("/get_prefixes")
-def flask_get_prefixes():
+@app.route("/get_prefixes/<int:asn>")
+def flask_get_prefixes(asn=None):
   """Return the list of prefixes as seen by RIPE stat"""
 
-  asn = app.config["CONFIG"]["asn"]
-  prefixes = get_announced_prefixes(asn)
+  if asn == None:
+    asn = app.config["CONFIG"]["asn"]
+
+  doc = get_announced_prefixes(asn)
+  doc["asn"] = asn
 
   return json.dumps(prefixes)
 
 
 @app.route("/get_visibility")
-def flask_get_visibility():
+@app.route("/get_visibility/<int:asn>")
+def flask_get_visibility(asn=None):
   """Return the visibility as seen by RIPE stat."""
 
-  asn = app.config["CONFIG"]["asn"]
-  visibility = get_visibility(asn)
+  if asn == None:
+    asn = app.config["CONFIG"]["asn"]
 
-  return json.dumps(visibility)
+  visibilities = get_visibility(asn)
+
+  doc = {}
+  doc["asn"] = asn
+  doc["visibilities"] = visibilities
+
+  return json.dumps(doc)
 
 
 if __name__ == '__main__':
