@@ -218,6 +218,7 @@
               }).get();
 
               for(i = 0; i < v6tabelle.length-1; i++) {
+                if (v6tabelle[i].prefix == "") continue;
                 console.log(v6tabelle[i]);
 
                 $.ajax({
@@ -227,16 +228,18 @@
                   .done(function( msg ) {
                     //alert( "Data Saved: " + msg );
                     var myArr = JSON.parse(msg);
-                    console.log(myArr);
-                    //changeTableCell(v6tabelle[i].prefix, myArr);
+                    //console.log(myArr);
+                    changeTableCell(v6tabelle[i].prefix, myArr);
                   });
               }
           function changeTableCell(prefix, visibility_prefix) {
               var v6tabelle = $('#ipv6');
               var id = prefix.replace(/\:/g,"_");
               id = id.replace("/","-");
+              id = '#'+id;
+              console.log(v6tabelle.cell(id).data);
 
-              if (v6tabelle.cell('#id').data != visibility_prefix.ipv6_peer_percentage) {
+              if (v6tabelle.cell('#'+id).data != visibility_prefix.ipv6_peer_percentage) {
 
               }
 
