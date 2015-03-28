@@ -17,7 +17,7 @@ def get_visibility_prefix(prefix):
     return None
 
   addr_type = "v4"
-  if ":" in addr_type:
+  if ":" in prefix:
     addr_type = "v6"
 
   ret = [None] * 16
