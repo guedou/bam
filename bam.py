@@ -6,9 +6,12 @@ from flask.ext.cache import Cache
 
 
 
+# Our own modules
 import lib.www.pages
 from lib.tools.get_announced_prefixes import *
 from lib.tools.get_visibility import *
+from lib.tools.get_visibility_prefix import *
+from lib.tools.get_probes import *
 
 
 # The Flask application
@@ -17,6 +20,7 @@ app = Flask(__name__,
             static_folder="data/www/static/",
             static_url_path="/static")
 cache = Cache(app,config={'CACHE_TYPE': 'simple'})
+
 
 @app.route("/")
 def flask_index():
@@ -44,7 +48,7 @@ def flask_get_prefixes(asn=None):
 @app.route("/get_visibility/<int:asn>")
 @cache.cached(timeout=60)
 def flask_get_visibility(asn=None):
-  """Return the visibility as seen by RIPE stat."""
+  """Return the visibility of an AS as seen by RIPE stat."""
 
   if asn == None:
     asn = app.config["CONFIG"]["asn"]
@@ -56,6 +60,38 @@ def flask_get_visibility(asn=None):
   doc["visibilities"] = visibilities
 
   return json.dumps(doc)
+
+
+@app.route("/get_visibility_prefix/<path:prefix>")
+@cache.cached(timeout=60)
+def flask_get_visibility_prefix(prefix):
+  """Return the visibility of a prefix as seen by RIPE stat."""
+
+  visibilities = get_visibility_prefix(prefix)
+
+  doc = {}
+  doc["prefix"] = prefix
+  doc["visibilities"] = visibilities
+
+  return json.dumps(doc)
+
+
+@app.route("/get_probes")
+@app.route("/get_probes/<int:asn>")
+@cache.cached(timeout=60)
+def flask_get_probes(asn=None):
+  """Return the probes contained in an ASN."""
+
+  if asn == None:
+    asn = app.config["CONFIG"]["asn"]
+
+  probes = get_probes(asn)
+
+  doc = {}
+  doc["asn"] = asn
+  doc["probes"] = probes
+
+  return json.dumps(probes)
 
 
 if __name__ == '__main__':
