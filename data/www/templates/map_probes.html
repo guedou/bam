@@ -1,0 +1,43 @@
+<!DOCTYPE html "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <title>Where are AS{{asn}} probes ?</title>
+  <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAhwZHfJr2n1l47lKeIrmtrRSeiF-y5f36AdpXWssU5szwIKF4LRTvNpgUBAzJwfCD5m3jUvvB_41NtA" type="text/javascript"></script>
+  <script type="text/javascript">
+
+    function initialize()
+    {
+      if (GBrowserIsCompatible())
+      {
+        var map = new GMap2(document.getElementById("map_canvas"));
+	map.setMapType(G_HYBRID_MAP);
+	map.addControl(new GSmallMapControl());
+	map.addControl(new GMapTypeControl());
+	map.addControl(new GOverviewMapControl())
+
+        map.setCenter(new GLatLng({{latitude}}, {{longitude}}), 5);
+
+{% for probe in probes %}
+
+var point{{probe["id"]}} = new GLatLng({{probe["latitude"]}}, {{probe["longitude"]}});
+var marker{{probe["id"]}} = new GMarker(point{{probe["id"]}});
+var html{{probe["id"]}} = '<a href="https://atlas.ripe.net/api/v1/probe/?id={{probe["id"]}}">{{probe["id"]}}</a>';
+
+GEvent.addListener(marker{{probe["id"]}}, 'click', function() {
+		       marker{{probe["id"]}}.openInfoWindowHtml(html{{probe["id"]}});
+			     });
+GEvent.addListener(marker{{probe["id"]}}, 'click', function() {
+		       marker{{probe["id"]}}.openInfoWindowHtml(html{{probe["id"]}});
+			     });
+map.addOverlay(marker{{probe["id"]}});
+{% endfor %}
+
+      }
+    }
+
+  </script>
+  </head>
+
+  <body onload="initialize()" onunload="GUnload()">
+    <div id="map_canvas" style="width: 600px; height: 400px"></div>
+  </body>
+</html>

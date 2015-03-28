@@ -29,6 +29,13 @@ def flask_index():
   return lib.www.pages.index(app.config["CONFIG"])
 
 
+@app.route("/map/probes")
+def flask_map_probes():
+  """Display a map with the probes"""
+
+  return lib.www.pages.map_probes(app.config["CONFIG"])
+
+
 @app.route("/get_prefixes")
 @app.route("/get_prefixes/<int:asn>")
 @cache.cached()

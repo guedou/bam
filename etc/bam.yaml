@@ -19,6 +19,7 @@
         - python-requests
         - python-prettytable
         - python-setuptools
+        - python-pandas
 
     ### Install cousteau
     - name: "Clone cousteau git repository"
