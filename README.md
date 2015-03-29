@@ -22,8 +22,9 @@ The BAM team
 ## Screenshots
 
 ![BAM index page](https://raw.githubusercontent.com/guedou/bam/master/data/screenshots/bam_index.png)
-![BAM collectors map](https://raw.githubusercontent.com/guedou/bam/master/data/screenshots/bam_maps_collecors.png)
-![BAM probes map](https://raw.githubusercontent.com/guedou/bam/master/data/screenshots/bam_maps_collecors.png)
+![BAM collectors map](https://raw.githubusercontent.com/guedou/bam/master/data/screenshots/bam_maps_collectors.png)
+![BAM probes map](https://raw.githubusercontent.com/guedou/bam/master/data/screenshots/bam_maps_probes.png)
+
 
 ## Try it yourself 
 
