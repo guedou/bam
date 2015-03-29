@@ -18,15 +18,14 @@ def index(config):
   latitude = pd.Series(latitudes).mean()
   longitude = pd.Series(longitudes).mean()
 
-
-  mape = flask.render_template("map_static.html",
-                               asn=asn,
-                               latitude=latitude,
-                               longitude=longitude,
-                               markers=probes,
-                               radius=30000,
-                               zoom=5,
-                               api_key=config.get("GMAP_API_KEY", "DUMMY-KEY"))
+  mape = flask.render_template("map_dynamic.html",
+                                 asn=asn,
+                                 latitude=latitude,
+                                 longitude=longitude,
+                                 radius=500000,
+                                 zoom=3,
+                                 source="get_visibility",
+                                 api_key=config.get("GMAP_API_KEY", "DUMMY-KEY"))
 
   value = flask.render_template("index.html", asn=asn, mape=mape)
 
@@ -57,9 +56,9 @@ def map_probes(config, map_type="dynamic"):
                                  asn=asn,
                                  latitude=latitude,
                                  longitude=longitude,
-                                 radius=30000,
-                                 zoom=5,
-                                 source="get_probes",
+                                 radius=1500000,
+                                 zoom=2,
+                                 source="get_visibility",
                                  api_key=config.get("GMAP_API_KEY", "DUMMY-KEY"))
   else:
 

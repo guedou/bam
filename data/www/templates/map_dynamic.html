@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <style type="text/css">
-      html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
-    </style>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={{ api_key }}"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script type="text/javascript">
 
       // Some "global" variables
@@ -82,7 +75,7 @@
           center: { lat: {{ latitude }}, lng: {{ longitude }}},
           zoom: {{ zoom }}
         };
-        var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+        var map = new google.maps.Map(document.getElementById('gmaps-pane'), mapOptions);
         the_map = map;
 
         update_markers();
@@ -97,9 +90,4 @@
          5000);
          //30 * 1000);
     </script>
-  </head>
-
-  <body>
-    <div id="map-canvas"></div>
-  </body>
-</html>
+    <div id="gmaps-pane" style="height:800px;"></div>
