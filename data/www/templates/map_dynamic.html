@@ -2,8 +2,8 @@
     <script type="text/javascript">
 
       // Some "global" variables
-      var the_map = [];
-      var markers = [];
+      var the_map{{name}} = [];
+      var markers{{name}} = [];
 
       // Ease the creation of circles
       function addCircle(map, latitude, longitude, color, content)
@@ -32,7 +32,7 @@
       }
 
       // Get data from JSON and add markers
-      function update_markers() {
+      function update_markers{{name}}() {
         $.ajax({
           method: "GET",
           url: "../{{ source }}"
@@ -53,22 +53,22 @@
             for (var i = 0; i < data.length; i++) {
               var thing = data[i];
             {% endif %}
-              //console.log(thing);
+              console.log(thing);
               if (thing)
               {
             {% if source == "get_visibility" %}
-                var circle = addCircle(the_map, thing.latitude, thing.longitude, thing.color, thing.name);
+                var circle = addCircle(the_map{{name}}, thing.latitude, thing.longitude, thing.color, thing.name);
             {% else %}
-                var circle = addCircle(the_map, thing.latitude, thing.longitude, thing.color, ""+thing.id);
+                var circle = addCircle(the_map{{name}}, thing.latitude, thing.longitude, thing.color, ""+thing.id);
             {% endif %}
                 new_markers.push(circle);
               }
              }
 
             // Remove old markers
-            for (var i = 0; i < markers.length; i++)
-              markers[i].setMap(null);
-            markers = new_markers;
+            for (var i = 0; i < markers{{name}}.length; i++)
+              markers{{name}}[i].setMap(null);
+            markers{{name}} = new_markers;
             });
       }
 
@@ -81,9 +81,9 @@
           zoom: {{ zoom }}
         };
         var map = new google.maps.Map(document.getElementById('{{name}}-pane'), mapOptions);
-        the_map = map;
+        the_map{{name}} = map;
 
-        update_markers();
+        update_markers{{name}}();
 
       }
 
