@@ -50,7 +50,7 @@
           </form>
         </div>
       <form id="fancy-display">
-        <div id="gmaps" style="color:white;float:left;padding:8px;">Probes Map</div>
+        <div id="gmaps" style="color:gray;background-color:white;float:left;padding:8px;">Probes Map</div>
         <div id="v4" style="color:white;float:left;padding:8px;">IPv4</div>
         <div id="v6" style="color:white;float:left;padding:8px;">IPv6</div>
       </form>
@@ -78,7 +78,7 @@
     {{ mape }}
 {% endautoescape %}
 
-          <div class="panel panel-default" id="v4-pane">
+          <div class="panel panel-default" id="v4-pane" style="display:none;">
             <!-- Default panel contents -->
             <div class="panel-heading">IPv4<sup><span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="This shows a detailed IP Routes List"></span></sup></div>
             <!-- Table -->
@@ -354,29 +354,21 @@
     <!-- Javascript to toggle display for a said tab -->
  
     <script>
-    if ($("#gmaps-pane").css('display') != "none")
-    {
-      $("#gmaps").css('background-color', 'white');
-      $("#gmaps").css('color', 'gray');
-    }
-    if ($("#v4-pane").css('display') != "none")
-    {
-      $("#v4").css('background-color', 'white');
-      $("#v4").css('color', 'gray');
-    }
-    if ($("#v6-pane").css('display') != "none")
-    {
-      $("#v6").css('background-color', 'white');
-      $("#v6").css('color', 'gray');
-    }
     $("#gmaps").click(function() {
       if ($("#gmaps-pane").css('display') != "none")
       {
         $("#gmaps").css('background-color', '');
         $("#gmaps").css('color', 'white');
+        
       } else {
         $("#gmaps").css('background-color', 'white');
         $("#gmaps").css('color', 'gray');
+        $("#v4").css('background-color', '');
+        $("#v4").css('color', 'white');
+        $("#v6").css('background-color', '');
+        $("#v6").css('color', 'white');
+        $("#v4-pane").css('display', 'none');
+        $("#v6-pane").css('display', 'none');
       }
       $("#gmaps-pane").toggle();
     });
@@ -389,6 +381,12 @@
       } else {
         $("#v4").css('background-color', 'white');
         $("#v4").css('color', 'gray');
+        $("#gmaps").css('background-color', '');
+        $("#gmaps").css('color', 'white');
+        $("#v6").css('background-color', '');
+        $("#v6").css('color', 'white');
+        $("#gmaps-pane").css('display', 'none');
+        $("#v6-pane").css('display', 'none');
       }
 
      $("#v4-pane").toggle();
@@ -401,6 +399,12 @@
       } else {
         $("#v6").css('background-color', 'white');
         $("#v6").css('color', 'gray');
+        $("#gmaps").css('background-color', '');
+        $("#gmaps").css('color', 'white');
+        $("#v4").css('background-color', '');
+        $("#v4").css('color', 'white');
+        $("#gmaps-pane").css('display', 'none');
+        $("#v4-pane").css('display', 'none');
       }
 
      $("#v6-pane").toggle();
