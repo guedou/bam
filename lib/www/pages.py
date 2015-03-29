@@ -3,35 +3,7 @@ import pandas as pd
 from lib.tools.get_probes import *
 from lib.tools.get_visibility import *
 
-def index(config):
-  """Build the BAM index."""
-  asn = config.get("asn", "No ASN provided !")
-  probes = get_probes(asn)
-
-  latitudes = []
-  longitudes = []
-  for probe in probes:
-    latitudes.append(probe["latitude"])
-    longitudes.append(probe["longitude"])
-    probe["content"] = "Probe ID: %s" % probe["id"]
-
-  latitude = pd.Series(latitudes).mean()
-  longitude = pd.Series(longitudes).mean()
-
-  mape = flask.render_template("map_dynamic.html",
-                                 asn=asn,
-                                 latitude=latitude,
-                                 longitude=longitude,
-                                 radius=500000,
-                                 zoom=3,
-                                 source="get_visibility",
-                                 api_key=config.get("GMAP_API_KEY", "DUMMY-KEY"))
-
-  value = flask.render_template("index.html", asn=asn, mape=mape)
-
-  return value
-
-def map_probes(config, map_type="dynamic"):
+def map_probes(config, map_type="dynamic", radius=30000):
   """Build the probes map."""
   asn = config.get("asn", "No ASN provided !")
 
@@ -52,27 +24,28 @@ def map_probes(config, map_type="dynamic"):
   longitude = pd.Series(longitudes).mean()
 
   if map_type == "dynamic":
-    return flask.render_template("map_dynamic.html",
+    map_core = flask.render_template("map_dynamic.html",
                                  asn=asn,
                                  latitude=latitude,
                                  longitude=longitude,
-                                 radius=1500000,
+                                 radius=radius,
                                  zoom=2,
-                                 source="get_visibility",
+                                 source="get_probes",
                                  api_key=config.get("GMAP_API_KEY", "DUMMY-KEY"))
   else:
-
-    return flask.render_template("map_static.html",
+    map_core = flask.render_template("map_static.html",
                                  asn=asn,
                                  latitude=latitude,
                                  longitude=longitude,
                                  markers=probes,
-                                 radius=30000,
-                                 zoom=5,
+                                 radius=radius,
+                                 zoom=2,
                                  api_key=config.get("GMAP_API_KEY", "DUMMY-KEY"))
 
+  return flask.render_template("map_wrapper.html", map_core=map_core)
 
-def map_collectors(config, map_type="dynamic"):
+
+def map_collectors(config, map_type="dynamic", radius=150000):
   """Build the collectors map."""
   asn = config.get("asn", "No ASN provided !")
 
@@ -92,20 +65,36 @@ def map_collectors(config, map_type="dynamic"):
   longitude = pd.Series(longitudes).mean()
 
   if map_type == "dynamic":
-    return flask.render_template("map_dynamic.html",
+    map_core = flask.render_template("map_dynamic.html",
                                  asn=asn,
                                  latitude=latitude,
                                  longitude=longitude,
-                                 radius=150000,
+                                 radius=radius,
                                  zoom=2,
                                  source="get_visibility",
                                  api_key=config.get("GMAP_API_KEY", "DUMMY-KEY"))
   else:
-    return flask.render_template("map_static.html",
+    map_core = flask.render_template("map_static.html",
                                  asn=asn,
                                  latitude=latitude,
                                  longitude=longitude,
                                  markers=collectors,
-                                 radius=150000,
+                                 radius=radius,
                                  zoom=2,
                                  api_key=config.get("GMAP_API_KEY", "DUMMY-KEY"))
+
+  return flask.render_template("map_wrapper.html", map_core=map_core)
+
+
+def index(config):
+  """Build the BAM index."""
+  asn = config.get("asn", "No ASN provided !")
+
+  rendered_map_probes = map_probes(config, "dynamic")
+  #rendered_map_collectors = map_collectors(config, "dynamic")
+
+  value = flask.render_template("index.html", asn=asn,
+                                              map_probes=rendered_map_probes,
+                                              map_collectors=rendered_map_collectors)
+
+  return value

@@ -53,6 +53,7 @@
             for (var i = 0; i < data.length; i++) {
               var thing = data[i];
             {% endif %}
+              console.log(thing);
               if (thing)
               {
                 var circle = addCircle(the_map, thing.latitude, thing.longitude, thing.color, thing.name);

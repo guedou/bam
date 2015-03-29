@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style type="text/css">
+      html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+{% autoescape false %}
+  {{ map_core }}
+{% endautoescape %}
+
+  </head>
+
+
+  <body>
+    <div id="gmaps-pane" style="height:800px;"></div>
+  </body>
+</html>
