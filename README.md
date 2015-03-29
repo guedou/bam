@@ -64,5 +64,5 @@ $ python lib/tools/get_visibility_prefix.py 185.50.64.0/22
 ### List probes of an AS
 $ python lib/tools/get_probes.py 202214
 
-### List an ASN route objetcs
+### List a prefix route objetcs
 $ python lib/tools/get_route_objects.py 185.50.64.0/22
