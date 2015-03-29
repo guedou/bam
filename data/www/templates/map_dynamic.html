@@ -56,7 +56,11 @@
               console.log(thing);
               if (thing)
               {
+            {% if source == "get_visibility" %}
                 var circle = addCircle(the_map, thing.latitude, thing.longitude, thing.color, thing.name);
+            {% else %}
+                var circle = addCircle(the_map, thing.latitude, thing.longitude, thing.color, ""+thing.id);
+            {% endif %}
                 new_markers.push(circle);
               }
              }
@@ -76,7 +80,7 @@
           center: { lat: {{ latitude }}, lng: {{ longitude }}},
           zoom: {{ zoom }}
         };
-        var map = new google.maps.Map(document.getElementById('gmaps-pane'), mapOptions);
+        var map = new google.maps.Map(document.getElementById('{{name}}-pane'), mapOptions);
         the_map = map;
 
         update_markers();
@@ -91,4 +95,4 @@
          5000);
          //30 * 1000);
     </script>
-    <div id="gmaps-pane" style="height:800px;"></div>
+    <div id="{{name}}-pane" style="height:800px;"></div>

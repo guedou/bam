@@ -23,6 +23,7 @@ def map_probes(config, map_type="dynamic", radius=30000):
   latitude = pd.Series(latitudes).mean()
   longitude = pd.Series(longitudes).mean()
 
+  name = "probes"
   if map_type == "dynamic":
     map_core = flask.render_template("map_dynamic.html",
                                  asn=asn,
@@ -31,6 +32,7 @@ def map_probes(config, map_type="dynamic", radius=30000):
                                  radius=radius,
                                  zoom=2,
                                  source="get_probes",
+                                 name=name,
                                  api_key=config.get("GMAP_API_KEY", "DUMMY-KEY"))
   else:
     map_core = flask.render_template("map_static.html",
@@ -39,10 +41,11 @@ def map_probes(config, map_type="dynamic", radius=30000):
                                  longitude=longitude,
                                  markers=probes,
                                  radius=radius,
+                                 name=name,
                                  zoom=2,
                                  api_key=config.get("GMAP_API_KEY", "DUMMY-KEY"))
 
-  return flask.render_template("map_wrapper.html", map_core=map_core)
+  return flask.render_template("map_wrapper.html", map_core=map_core, name=name)
 
 
 def map_collectors(config, map_type="dynamic", radius=150000):
@@ -64,6 +67,7 @@ def map_collectors(config, map_type="dynamic", radius=150000):
   latitude = pd.Series(latitudes).mean()
   longitude = pd.Series(longitudes).mean()
 
+  name = "collectors"
   if map_type == "dynamic":
     map_core = flask.render_template("map_dynamic.html",
                                  asn=asn,
@@ -72,6 +76,7 @@ def map_collectors(config, map_type="dynamic", radius=150000):
                                  radius=radius,
                                  zoom=2,
                                  source="get_visibility",
+                                 name=name,
                                  api_key=config.get("GMAP_API_KEY", "DUMMY-KEY"))
   else:
     map_core = flask.render_template("map_static.html",
@@ -81,9 +86,10 @@ def map_collectors(config, map_type="dynamic", radius=150000):
                                  markers=collectors,
                                  radius=radius,
                                  zoom=2,
+                                 name=name,
                                  api_key=config.get("GMAP_API_KEY", "DUMMY-KEY"))
 
-  return flask.render_template("map_wrapper.html", map_core=map_core)
+  return flask.render_template("map_wrapper.html", map_core=map_core, name=name)
 
 
 def index(config):
