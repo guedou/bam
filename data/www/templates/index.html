@@ -102,10 +102,8 @@
           </div>
 
           <script>
-
 /*         var xmlhttp = new XMLHttpRequest();
           var url = "../get_prefixes";
-
           xmlhttp.onreadystatechange = function() {
               if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                   var myArr = JSON.parse(xmlhttp.responseText);
@@ -114,8 +112,6 @@
           }
           xmlhttp.open("GET", url, true);
           xmlhttp.send();*/
-
-
           $.ajax({
             method: "GET",
             url: "../get_prefixes"
@@ -136,25 +132,17 @@
                 });
               
             });
-
-
-
             //var timerId = setInterval(timerMethod, 1000);    //60,000 milliseconds
             timerMethod();
-
-
           function myFunction(prefixes,visibility) {
-
-              var header = "<thead><tr><th with=30>IP</th><th with=30>RRC00</th><th with=30>RRC01</th><th with=30>RRC03</th><th with=30>RRC04</th><th with=30>RRC05</th><th with=30>RRC06</th><th with=30>RRC07</th><th with=30>RRC10</th><th with=30>RRC11</th><th with=30>RRC12</th><th with=30>RRC13</th><th with=30>RRC14</th><th with=30>RRC15</th></tr></thead><tbody>";
-              var footer = "</tbody><tfooter><tr><th with=30>IP</th><th with=30>RRC00</th><th with=30>RRC01</th><th with=30>RRC03</th><th with=30>RRC04</th><th with=30>RRC05</th><th with=30>RRC06</th><th with=30>RRC07</th><th with=30>RRC10</th><th with=30>RRC11</th><th with=30>RRC12</th><th with=30>RRC13</th><th with=30>RRC14</th><th with=30>RRC15</th></tr></tfooter>";
-
+              var header = "<thead><tr><th>IP</th><th>RRC00</th><th>RRC01</th><th>RRC03</th><th>RRC04</th><th>RRC05</th><th>RRC06</th><th>RRC07</th><th>RRC10</th><th>RRC11</th><th>RRC12</th><th>RRC13</th><th>RRC14</th><th>RRC15</th></tr></thead><tbody>";
+              var footer = "</tbody><tfooter><tr><th>IP</th><th>RRC00</th><th>RRC01</th><th>RRC03</th><th>RRC04</th><th>RRC05</th><th>RRC06</th><th>RRC07</th><th>RRC10</th><th>RRC11</th><th>RRC12</th><th>RRC13</th><th>RRC14</th><th>RRC15</th></tr></tfooter>";
               var outv4 = header;
               var outv6 = header;
               var i;
               var j;
               prefixes.v4.sort();
               prefixes.v6.sort();
-
               // do the v4 Stuff
               for(i = 0; i < prefixes.v4.length; i++) {
                 var id = prefixes.v4[i].replace(/\./g,"_");
@@ -167,7 +155,6 @@
                 }
                 outv4 += '</tr>';
               }
-
               // do the v6 Stuff
               for(i = 0; i < prefixes.v6.length; i++) {
                 var id = prefixes.v6[i].replace(/\:/g,"_");
@@ -180,15 +167,12 @@
                 }
                 outv6 += '</tr>';
               }
-
               outv4 += footer;
               outv6 += footer;
-
               document.getElementById("ipv4").innerHTML = outv4;
               document.getElementById("ipv6").innerHTML = outv6;
               var v4tabelle = $('#ipv4');
               var v6tabelle = $('#ipv6');
-
               v4tabelle.DataTable(
               {"columnDefs": [ 
                 {
@@ -215,13 +199,10 @@
                 ]
               }
               );
-
               //console.log(tabelle);
           }
-
           function timerMethod() {
               var i;
-
               var v4tabelle = $('#ipv4 tbody tr').map(function() {
                 // $(this) is used more than once; cache it for performance.
                 var $row = $(this);
@@ -232,7 +213,6 @@
                   prefix: $row.find(':nth-child(1)').text()
                 };
               }).get();
-
               var v4Func = function (prefixVal){
                 $.ajax({
                   method: "GET",
@@ -247,23 +227,16 @@
                     changeTableCellipv4(prefixVal , myArr);
                   });
               }
-
               for(i = 0; i < v4tabelle.length-1; i++) {
                 if (v4tabelle[i].prefix == "" || v4tabelle[i].prefix == "IP") continue;
                 console.log("v4tabelle[i]");
                 console.log(v4tabelle[i]);
                 var v4prefix = v4tabelle[i].prefix;
-
                 console.log("Fetching IPv4 json for prefix");
                 console.log(v4tabelle[i].prefix);
-
                 v4Func(v4tabelle[i].prefix);
-
-
               }
               
-
-
               var v6tabelle = $('#ipv6 tbody tr').map(function() {
                 // $(this) is used more than once; cache it for performance.
                 var $row = $(this);
@@ -274,7 +247,6 @@
                   prefix: $row.find(':nth-child(1)').text()
                 };
               }).get();
-
               var v6Func = function (prefixVal){
                 $.ajax({
                   method: "GET",
@@ -289,35 +261,27 @@
                     changeTableCellipv6(prefixVal , myArr);
                   });
               }
-
               for(i = 0; i < v6tabelle.length-1; i++) {
                 if (v6tabelle[i].prefix == "" || v6tabelle[i].prefix == "IP") continue;
                 console.log(v6tabelle[i]);
                 var v6prefix = v6tabelle[i].prefix;
-
                 console.log("Fetching IPv6 json for prefix");
                 console.log(v6tabelle[i].prefix);
-
                 v6Func(v6tabelle[i].prefix);
               }
-              /*setTimeout(timerMethod,5000);*/
+              setTimeout(timerMethod,5000);
           }
-
-          function changeTableCellipv4(prefix, visibility_prefix) {
+          function changeTableCellipv4(prefix, visibility_prefix) {
               var tabelle = $('#ipv4').DataTable();
               var id = prefix.replace(/\./g,"_");
               id = id.replace("/","-");
               id = '#'+id;
               console.log("V4 Prefix");
               console.log(prefix);
-
-
               var j;
-
               for(j = 0; j < visibility_prefix.visibilities.length; j++) {
                 if (visibility_prefix.visibilities[j] != null) {
                   //sleep(1);
-
                   console.log("visibility value:")
                   console.log(visibility_prefix.visibilities[j].peer_percentage);
                 
@@ -331,18 +295,13 @@
                   }
                 }
               }
-
           }
-
-          function changeTableCellipv6(prefix, visibility_prefix) {
+          function changeTableCellipv6(prefix, visibility_prefix) {
               var tabelle = $('#ipv6').DataTable();
               var id = prefix.replace(/\:/g,"_");
               id = id.replace("/","-");
               id = '#'+id;
-
-
               var j;
-
               for(j = 0; j < visibility_prefix.visibilities.length; j++) {
                 if (visibility_prefix.visibilities[j] != null) {
                   //sleep(1);
@@ -354,10 +313,7 @@
                   }
                 }
               }
-
           }
-
-
           </script>
         </div>
       </div>
@@ -392,7 +348,6 @@
       }
       $("#gmaps-pane").toggle();
     });
-
     $("#v4").click(function() {
       if ($("#v4-pane").css('display') != "none")
       {
@@ -408,7 +363,6 @@
         $("#gmaps-pane").css('display', 'none');
         $("#v6-pane").css('display', 'none');
       }
-
      $("#v4-pane").toggle();
     });
     $("#v6").click(function() {
@@ -426,7 +380,6 @@
         $("#gmaps-pane").css('display', 'none');
         $("#v4-pane").css('display', 'none');
       }
-
      $("#v6-pane").toggle();
     });
       </script>
