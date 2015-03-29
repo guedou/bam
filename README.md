@@ -21,7 +21,7 @@ The BAM team
 
 ## Screenshots
 
-(https://raw.githubusercontent.com/guedou/bam/master/data/screenshots/bam_index.png)
+![BAM index page](https://raw.githubusercontent.com/guedou/bam/master/data/screenshots/bam_index.png)
 
 ## Try it yourself 
 
