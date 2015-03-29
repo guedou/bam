@@ -40,6 +40,8 @@ visualisations.
 
 Open a browser on your vagrant host to http://localhost:2807
 
+Standalone maps are available at http://localhost:2807/map/collectors and
+http://localhost:2807/map/probes
 
 ## Command line tools
 
