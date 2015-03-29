@@ -232,22 +232,33 @@
                 };
               }).get();
 
-              for(i = 0; i < v4tabelle.length-1; i++) {
-                if (v4tabelle[i].prefix == "" || v4tabelle[i].prefix == "IP") continue;
-                console.log(v4tabelle[i]);
-                var v4prefix = v4tabelle[i].prefix;
-
+              var v4Func = function (prefixVal){
                 $.ajax({
                   method: "GET",
-                  url: '../get_visibility_prefix/' + v4tabelle[i].prefix
+                  url: '../get_visibility_prefix/' + prefixVal
                 })
                   .done(function( msg ) {
                     //alert( "Data Saved: " + msg );
                     var myArr = JSON.parse(msg);
                     //console.log(myArr);
-
-                    changeTableCellipv4(v4prefix , myArr);
+                    console.log("Calling for ipv");
+                    console.log(prefixVal);
+                    changeTableCellipv4(prefixVal , myArr);
                   });
+              }
+
+              for(i = 0; i < v4tabelle.length-1; i++) {
+                if (v4tabelle[i].prefix == "" || v4tabelle[i].prefix == "IP") continue;
+                console.log("v4tabelle[i]");
+                console.log(v4tabelle[i]);
+                var v4prefix = v4tabelle[i].prefix;
+
+                console.log("Fetching IPv4 json for prefix");
+                console.log(v4tabelle[i].prefix);
+
+                v4Func(v4tabelle[i].prefix);
+
+
               }
               
 
@@ -263,24 +274,32 @@
                 };
               }).get();
 
-              for(i = 0; i < v6tabelle.length-1; i++) {
-                if (v6tabelle[i].prefix == "" || v6tabelle[i].prefix == "IP") continue;
-                console.log(v6tabelle[i]);
-                var v6prefix = v6tabelle[i].prefix;
-
+              var v6Func = function (prefixVal){
                 $.ajax({
                   method: "GET",
-                  url: '../get_visibility_prefix/' + v6tabelle[i].prefix
+                  url: '../get_visibility_prefix/' + prefixVal
                 })
                   .done(function( msg ) {
                     //alert( "Data Saved: " + msg );
                     var myArr = JSON.parse(msg);
                     //console.log(myArr);
-
-                    changeTableCellipv6(v6prefix , myArr);
+                    console.log("Calling for ipv");
+                    console.log(prefixVal);
+                    changeTableCellipv6(prefixVal , myArr);
                   });
               }
-              setTimeout(timerMethod,60000);
+
+              for(i = 0; i < v6tabelle.length-1; i++) {
+                if (v6tabelle[i].prefix == "" || v6tabelle[i].prefix == "IP") continue;
+                console.log(v6tabelle[i]);
+                var v6prefix = v6tabelle[i].prefix;
+
+                console.log("Fetching IPv6 json for prefix");
+                console.log(v6tabelle[i].prefix);
+
+                v6Func(v6tabelle[i].prefix);
+              }
+              setTimeout(timerMethod,5000);
           }
 
           function changeTableCellipv4(prefix, visibility_prefix) {
