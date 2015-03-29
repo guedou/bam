@@ -1,9 +1,16 @@
 # BGP Atlas Monitor
 
-The BGP Atlas Monitor (BAM) was developped during the RIPE Atlas Hackathon 2015
+The BGP Atlas Monitor (BAM) was developed during the RIPE Atlas Hackathon 2015
 in Amsterdam. BAM goals are to display, in real time, informations that are
 useful for network operators such as prefixes visibility as seen from RIS, or
 ping delays as seen fron the RIPE Atlas probes.
+
+Currently, you can provide an AS number to BAM. It will retrieve your IPv4 and
+IPv6 prefixes from RIPE stat, and display their visibilities from RIS. It also
+shows a map of the probes in your network, as well as a map displaying prefixes
+visibility from the RIS collectors.
+
+Command line tools are also available in order to manipulating ASes information.
 
 The BAM team
   Guillaume Valadon
@@ -27,6 +34,9 @@ host $ vagrant up
 host $ vagrant ssh -- -L 2807:localhost:5000
 
 guest$ python bam.py YOUR_ASN
+
+The -r flag could be used to generate random data and trigger BAM
+visualisations.
 
 Open a browser on your vagrant host to http://localhost:2807
 
