@@ -30,7 +30,6 @@
   </head>
 
   <body>
-
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -51,14 +50,15 @@
           </form>
         </div>
       <form id="fancy-display">
-        <button id="gmaps" type="button" class="btn btn-default">Probes Map</button>
-        <button id="v4" type="button" class="btn btn-default">IPv4</button>
-        <button id="v6" type="button" class="btn btn-default">IPv6</button>
+        <div id="gmaps" style="color:white;float:left;padding:8px;">Probes Map</div>
+        <div id="v4" style="color:white;float:left;padding:8px;">IPv4</div>
+        <div id="v6" style="color:white;float:left;padding:8px;">IPv6</div>
       </form>
       </div>
     </nav>
 
         <br />
+  <img src="/logo.png">
     <div class="container-fluid">
       <div class="row">
         <!-- <div class="col-sm-3 col-md-2 sidebar">
@@ -194,7 +194,7 @@
                   "render": function ( data, type, row ) {
                     value = Math.round(data*37);
                     other_value = 37 - value;
-                    return '<table border=0 cellspacing=0 cellpadding=0 style="width:100%;"><tr><td style="padding:0px;"><div style="width:100%;height:'+ other_value +'px;padding:0px;background-color:white;"></div></td></tr><tr><td  style="padding:0px;"><div style="width:100%;height:'+ value +'px;padding:0px;background-color:#a1d775;"></div></td></tr></table>';
+                    return '<table border=0 cellspacing=0 cellpadding=0 style="width:100%;"><tr><td style="padding:0px;"><div style="width:100%;height:'+ other_value +'px;padding:0px;background-color:white;"></div></td></tr><tr><td  style="padding:0px;"><div style="width:100%;height:'+ value +'px;padding:0px;background-color:#008080;"></div></td></tr></table>';
                   },
                 "targets": [1,2,3,4,5,6,7,8,9,10,11,12,13]
                 }
@@ -207,7 +207,7 @@
                   "render": function ( data, type, row ) {
                     value = Math.round(data*37);
                     other_value = 37 - value;
-                    return '<table border=0 cellspacing=0 cellpadding=0 style="width:100%;"><tr><td  style="padding:0px;"><div style="width:82px;height:'+ other_value +'px;padding:0px;background-color:white;"></div></td></tr><tr><td  style="padding:0px;"><div style="width:100%;height:'+ value +'px;padding:0px;background-color:#a1d775;"></div></td></tr></table>';
+                    return '<table border=0 cellspacing=0 cellpadding=0 style="width:100%;"><tr><td  style="padding:0px;"><div style="width:82px;height:'+ other_value +'px;padding:0px;background-color:white;"></div></td></tr><tr><td  style="padding:0px;"><div style="width:100%;height:'+ value +'px;padding:0px;background-color:#008080;"></div></td></tr></table>';
                   },
                 "targets": [1,2,3,4,5,6,7,8,9,10,11,12,13]
                 }
@@ -356,42 +356,51 @@
     <script>
     if ($("#gmaps-pane").css('display') != "none")
     {
-      $("#gmaps").css('background-color', 'gray');
+      $("#gmaps").css('background-color', 'white');
+      $("#gmaps").css('color', 'gray');
     }
     if ($("#v4-pane").css('display') != "none")
     {
-      $("#v4").css('background-color', 'gray');
+      $("#v4").css('background-color', 'white');
+      $("#v4").css('color', 'gray');
     }
     if ($("#v6-pane").css('display') != "none")
     {
-      $("#v6").css('background-color', 'gray');
+      $("#v6").css('background-color', 'white');
+      $("#v6").css('color', 'gray');
     }
     $("#gmaps").click(function() {
-      if ($("#gmaps-pane").css('display') == "none")
+      if ($("#gmaps-pane").css('display') != "none")
       {
-        $("#gmaps").css('background-color', 'gray');
+        $("#gmaps").css('background-color', '');
+        $("#gmaps").css('color', 'white');
       } else {
         $("#gmaps").css('background-color', 'white');
+        $("#gmaps").css('color', 'gray');
       }
       $("#gmaps-pane").toggle();
     });
 
     $("#v4").click(function() {
-      if ($("#v4-pane").css('display') == "none")
+      if ($("#v4-pane").css('display') != "none")
       {
-        $("#v4").css('background-color', 'gray');
+        $("#v4").css('background-color', '');
+        $("#v4").css('color', 'white');
       } else {
         $("#v4").css('background-color', 'white');
+        $("#v4").css('color', 'gray');
       }
 
      $("#v4-pane").toggle();
     });
     $("#v6").click(function() {
-      if ($("#v6-pane").css('display') == "none")
+      if ($("#v6-pane").css('display') != "none")
       {
-        $("#v6").css('background-color', 'gray');
+        $("#v6").css('background-color', '');
+        $("#v6").css('color', 'white');
       } else {
         $("#v6").css('background-color', 'white');
+        $("#v6").css('color', 'gray');
       }
 
      $("#v6-pane").toggle();
