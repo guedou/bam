@@ -19,6 +19,10 @@ The BAM team
   Thomas Holterbach
 
 
+## Screenshots
+
+(https://raw.githubusercontent.com/guedou/bam/master/data/screenshots/bam_index.png)
+
 ## Try it yourself 
 
 BAM is packaged to be easily tested using vagrant. On your host, you will only
