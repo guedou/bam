@@ -3,7 +3,7 @@ import pandas as pd
 from lib.tools.get_probes import *
 from lib.tools.get_visibility import *
 
-def map_probes(config, map_type="dynamic", radius=30000):
+def map_probes(config, map_type="dynamic", radius=30000, wrapper=True):
   """Build the probes map."""
   asn = config.get("asn", "No ASN provided !")
 
@@ -45,10 +45,12 @@ def map_probes(config, map_type="dynamic", radius=30000):
                                  zoom=2,
                                  api_key=config.get("GMAP_API_KEY", "DUMMY-KEY"))
 
-  return flask.render_template("map_wrapper.html", map_core=map_core, name=name)
+  if wrapper:
+    return flask.render_template("map_wrapper.html", map_core=map_core, name=name)
+  return map_core
 
 
-def map_collectors(config, map_type="dynamic", radius=150000):
+def map_collectors(config, map_type="dynamic", radius=150000, wrapper=True):
   """Build the collectors map."""
   asn = config.get("asn", "No ASN provided !")
 
@@ -89,15 +91,17 @@ def map_collectors(config, map_type="dynamic", radius=150000):
                                  name=name,
                                  api_key=config.get("GMAP_API_KEY", "DUMMY-KEY"))
 
-  return flask.render_template("map_wrapper.html", map_core=map_core, name=name)
+  if wrapper:
+    return flask.render_template("map_wrapper.html", map_core=map_core, name=name)
+  return map_core
 
 
 def index(config):
   """Build the BAM index."""
   asn = config.get("asn", "No ASN provided !")
 
-  rendered_map_probes = map_probes(config, "dynamic")
-  rendered_map_collectors = map_collectors(config, "dynamic")
+  rendered_map_probes = map_probes(config, "dynamic", wrapper=False)
+  rendered_map_collectors = map_collectors(config, "dynamic", wrapper=False)
 
   value = flask.render_template("index.html", asn=asn,
                                               map_probes=rendered_map_probes,
