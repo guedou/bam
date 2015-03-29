@@ -32,7 +32,7 @@ def index(config):
 
   return value
 
-def map_probes(config):
+def map_probes(config, map_type="dynamic"):
   """Build the probes map."""
   asn = config.get("asn", "No ASN provided !")
 
@@ -52,17 +52,28 @@ def map_probes(config):
   latitude = pd.Series(latitudes).mean()
   longitude = pd.Series(longitudes).mean()
 
-  return flask.render_template("map.html",
-                               asn=asn,
-                               latitude=latitude,
-                               longitude=longitude,
-                               markers=probes,
-                               radius=30000,
-                               zoom=5,
-                               api_key=config.get("GMAP_API_KEY", "DUMMY-KEY"))
+  if map_type == "dynamic":
+    return flask.render_template("map_dynamic.html",
+                                 asn=asn,
+                                 latitude=latitude,
+                                 longitude=longitude,
+                                 radius=30000,
+                                 zoom=5,
+                                 source="get_probes",
+                                 api_key=config.get("GMAP_API_KEY", "DUMMY-KEY"))
+  else:
+
+    return flask.render_template("map_static.html",
+                                 asn=asn,
+                                 latitude=latitude,
+                                 longitude=longitude,
+                                 markers=probes,
+                                 radius=30000,
+                                 zoom=5,
+                                 api_key=config.get("GMAP_API_KEY", "DUMMY-KEY"))
 
 
-def map_collectors(config):
+def map_collectors(config, map_type="dynamic"):
   """Build the collectors map."""
   asn = config.get("asn", "No ASN provided !")
 
@@ -81,11 +92,21 @@ def map_collectors(config):
   latitude = pd.Series(latitudes).mean()
   longitude = pd.Series(longitudes).mean()
 
-  return flask.render_template("map.html",
-                               asn=asn,
-                               latitude=latitude,
-                               longitude=longitude,
-                               markers=collectors,
-                               radius=150000,
-                               zoom=2,
-                               api_key=config.get("GMAP_API_KEY", "DUMMY-KEY"))
+  if map_type == "dynamic":
+    return flask.render_template("map_dynamic.html",
+                                 asn=asn,
+                                 latitude=latitude,
+                                 longitude=longitude,
+                                 radius=150000,
+                                 zoom=2,
+                                 source="get_visibility",
+                                 api_key=config.get("GMAP_API_KEY", "DUMMY-KEY"))
+  else:
+    return flask.render_template("map_static.html",
+                                 asn=asn,
+                                 latitude=latitude,
+                                 longitude=longitude,
+                                 markers=collectors,
+                                 radius=150000,
+                                 zoom=2,
+                                 api_key=config.get("GMAP_API_KEY", "DUMMY-KEY"))

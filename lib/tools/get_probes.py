@@ -1,8 +1,9 @@
 import requests
 import argparse
 import json
+import random
 
-def get_probes (asn):
+def get_probes (asn, random_data=False):
     url = 'https://stat.ripe.net/data/atlas-probes/data.json?resource=AS'+str(asn)
 
     r = requests.get (url)
@@ -19,8 +20,16 @@ def get_probes (asn):
                 probe['address_v4'] = 'Unknown'
             if 'address_v6' not in probe:
                 probe['address_v6'] = 'Unknown'
-            probes_list.append({'id':probe['id'], 'country_code':probe['country_code'], 'ipv4':probe['address_v4'], 'ipv6':probe['address_v6'], 'latitude':probe['latitude'], 'longitude':probe['longitude']})
-        
+
+            if random_data:
+              index = random.randint(0, 2)
+              probe["color"] = ["#00FF00", "#FF0000", "#FFA500"][index]
+            else:
+              probe["color"] = "#00FF00"
+
+            probes_list.append({'id':probe['id'], 'country_code':probe['country_code'], 'ipv4':probe['address_v4'], 'ipv6':probe['address_v6'], 'latitude':probe['latitude'], 'longitude':probe['longitude'], "color" : probe["color"]})
+
+
     return probes_list
 
 
