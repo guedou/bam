@@ -34,9 +34,10 @@
     <nav class="navbar navbar-inverse" style="border-bottom-color: white;margin:0px;border:0px;">
 
 
-        <div id="gmaps" style="float:left;height:50px;color:gray;background-color:white;float:left;padding:14px;">Probes Map</div>
-        <div id="v4" style="float:left;height:50px;color:white;float:left;padding:14px;background-color:#222222;">IPv4</div>
-        <div id="v6" style="float:left;height:50px;color:white;float:left;padding:14px;background-color:#222222;">IPv6</div>
+        <div class="menucheck" id="probes" style="float:left;height:50px;color:gray;background-color:#222222;float:left;padding:14px;">Probes Map</div>
+        <div class="menucheck" id="collectors" style="float:left;height:50px;color:white;background-color:#222222;float:left;padding:14px;">Collectors Map</div>
+        <div class="menucheck" id="v4" style="float:left;height:50px;color:white;float:left;padding:14px;background-color:#222222;">IPv4</div>
+        <div class="menucheck" id="v6" style="float:left;height:50px;color:white;float:left;padding:14px;background-color:#222222;">IPv6</div>
         <div class="navbar-right" style="clear:right;float:right;"><a href="#" ><img src="static/logo.png" style="padding-right:15px;padding-left:15px;float:left;background-color:white" height=50></div>
         <div class="navbar-right" style="float:right;"><a class="navbar-brand navbar-left" style="background-color:white;color:black;" href="#">BGP Atlas Monitor</a></div>
 
@@ -61,12 +62,15 @@
 
         <div>
         <!--div class="col-sm-9 col-md-12 main"-->
-  
+
 {% autoescape false %}
     {{ map_probes }}
 {% endautoescape %}
 
-          <div class="panel panel-default" id="v4-pane" style="display:none;">
+{% autoescape false %}
+    {{ map_collectors }}
+{% endautoescape %}
+          <div class="pane panel panel-default" id="v4-pane" style="display:none;">
             <!-- Default panel contents -->
             <div class="panel-heading">IPv4<sup><span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="This shows a detailed IP Routes List"></span></sup></div>
             <!-- Table -->
@@ -77,7 +81,7 @@
             
           </div>
 
-          <div class="panel panel-default" style="display:none;" id="v6-pane">
+          <div class="pane panel panel-default" style="display:none;" id="v6-pane">
             <!-- Default panel contents -->
             <div class="panel-heading">IPv6<sup><span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="This shows a detailed IP Routes List"></span></sup></div>
             <!-- Table -->
@@ -317,6 +321,16 @@
     <!-- Javascript to toggle display for a said tab -->
  
     <script>
+    $('.menucheck').click(function() {
+      $('.menucheck').css('background-color', '#222222');
+      $('.menucheck').css('color', 'white');
+      $(this).css('color', 'gray');
+      $(this).css('background-color', 'white');
+      $('.pane').css('display', 'none');
+      $('#'+($(this).attr('id'))+'-pane').toggle();
+    });
+
+   /* 
     $("#gmaps").click(function() {
       if ($("#gmaps-pane").css('display') != "none")
       {
@@ -368,7 +382,7 @@
         $("#v4-pane").css('display', 'none');
       }
      $("#v6-pane").toggle();
-    });
+    }); */
       </script>
   </body>
 </html>
