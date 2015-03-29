@@ -19,7 +19,7 @@ def index(config):
   longitude = pd.Series(longitudes).mean()
 
 
-  mape = flask.render_template("map.html",
+  mape = flask.render_template("map_static.html",
                                asn=asn,
                                latitude=latitude,
                                longitude=longitude,
