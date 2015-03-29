@@ -1,6 +1,16 @@
 # BGP Atlas Monitor
 
-Hello RIPE Atlas Hackathon !
+The BGP Atlas Monitor (BAM) was developped during the RIPE Atlas Hackathon 2015
+in Amsterdam. BAM goals are to display, in real time, informations that are
+useful for network operators such as prefixes visibility as seen from RIS, or
+ping delays as seen fron the RIPE Atlas probes.
+
+The BAM team
+  Guillaume Valadon
+  Francois Contant
+  Mathias Handsche
+  Thomas Holterbach
+
 
 ## Try it yourself 
 
