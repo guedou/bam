@@ -24,6 +24,9 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style type="text/css">
+      html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
+    </style>
   </head>
 
   <body>
@@ -47,9 +50,15 @@
             <input type="text" class="form-control" placeholder="ASN ...">
           </form>
         </div>
+      <form id="fancy-display">
+        <button id="gmaps" type="button" class="btn btn-default">Probes Map</button>
+        <button id="v4" type="button" class="btn btn-default">IPv4</button>
+        <button id="v6" type="button" class="btn btn-default">IPv6</button>
+      </form>
       </div>
     </nav>
 
+        <br />
     <div class="container-fluid">
       <div class="row">
         <!-- <div class="col-sm-3 col-md-2 sidebar">
@@ -58,10 +67,18 @@
           </ul>
         </div> -->
         <!-- <div class="col-sm-9 col-sm-offset-3 col-md-12 col-md-offset-2 main">-->
+      <br />
+      <br />
+      <br />  
+
         <div class="col-sm-9 col-md-12 main">
           <h1 class="page-header">Dashboard for AS{{ asn }}</h1>
   
-          <div class="panel panel-default">
+{% autoescape false %}
+    {{ mape }}
+{% endautoescape %}
+
+          <div class="panel panel-default" id="v4-pane">
             <!-- Default panel contents -->
             <div class="panel-heading">IPv4<sup><span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="This shows a detailed IP Routes List"></span></sup></div>
             <!-- Table -->
@@ -72,7 +89,7 @@
             
           </div>
 
-          <div class="panel panel-default">
+          <div class="panel panel-default" style="display:none;" id="v6-pane">
             <!-- Default panel contents -->
             <div class="panel-heading">IPv6<sup><span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="This shows a detailed IP Routes List"></span></sup></div>
             <!-- Table -->
@@ -121,7 +138,7 @@
 
 
 
-            var timerId = setInterval(timerMethod, 1000);    //60,000 milliseconds
+            var timerId = setInterval(timerMethod, 60000);    //60,000 milliseconds
 
 
           function myFunction(prefixes,visibility) {
@@ -259,5 +276,53 @@
     
     <script src="static/bootstrap/js/bootstrap.min.js"></script>
     <script src="//cdn.datatables.net/1.10.5/js/jquery.dataTables.min.js"></script>
+
+ 
+    <!-- Javascript to toggle display for a said tab -->
+ 
+    <script>
+    if ($("#gmaps-pane").css('display') != "none")
+    {
+      $("#gmaps").css('background-color', 'gray');
+    }
+    if ($("#v4-pane").css('display') != "none")
+    {
+      $("#v4").css('background-color', 'gray');
+    }
+    if ($("#v6-pane").css('display') != "none")
+    {
+      $("#v6").css('background-color', 'gray');
+    }
+    $("#gmaps").click(function() {
+      if ($("#gmaps-pane").css('display') == "none")
+      {
+        $("#gmaps").css('background-color', 'gray');
+      } else {
+        $("#gmaps").css('background-color', 'white');
+      }
+      $("#gmaps-pane").toggle();
+    });
+
+    $("#v4").click(function() {
+      if ($("#v4-pane").css('display') == "none")
+      {
+        $("#v4").css('background-color', 'gray');
+      } else {
+        $("#v4").css('background-color', 'white');
+      }
+
+     $("#v4-pane").toggle();
+    });
+    $("#v6").click(function() {
+      if ($("#v6-pane").css('display') == "none")
+      {
+        $("#v6").css('background-color', 'gray');
+      } else {
+        $("#v6").css('background-color', 'white');
+      }
+
+     $("#v6-pane").toggle();
+    });
+      </script>
   </body>
 </html>

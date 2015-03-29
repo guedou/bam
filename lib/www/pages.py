@@ -6,9 +6,31 @@ from lib.tools.get_visibility import *
 def index(config):
   """Build the BAM index."""
   asn = config.get("asn", "No ASN provided !")
+  probes = get_probes(asn)
 
-  return flask.render_template("index.html", asn=asn)
+  latitudes = []
+  longitudes = []
+  for probe in probes:
+    latitudes.append(probe["latitude"])
+    longitudes.append(probe["longitude"])
+    probe["content"] = "Probe ID: %s" % probe["id"]
 
+  latitude = pd.Series(latitudes).mean()
+  longitude = pd.Series(longitudes).mean()
+
+
+  mape = flask.render_template("map_static.html",
+                               asn=asn,
+                               latitude=latitude,
+                               longitude=longitude,
+                               markers=probes,
+                               radius=30000,
+                               zoom=5,
+                               api_key=config.get("GMAP_API_KEY", "DUMMY-KEY"))
+
+  value = flask.render_template("index.html", asn=asn, mape=mape)
+
+  return value
 
 def map_probes(config, map_type="dynamic"):
   """Build the probes map."""
