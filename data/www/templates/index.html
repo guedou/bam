@@ -13,7 +13,9 @@
 
     <!-- Bootstrap core CSS -->
     <link href="static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="//cdn.datatables.net/1.10.5/css/jquery.dataTables.min.css" rel="stylesheet">
+
+    <link href="//cdn.datatables.net/1.10.5/css/jquery.dataTables.min.css" rel="stylesheet"> 
+    <link href="//cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.css">
 
     <!-- Custom styles for this template -->
     <link href="static/dashboard.css" rel="stylesheet">
@@ -32,6 +34,7 @@
   <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
+        <a class="navbar-brand navbar-right" href="#">BAM - BGP Atlas Monitor</a>
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
             <span class="sr-only">Toggle navigation</span>
@@ -39,16 +42,16 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">BAM - BGP Atlas Monitor</a>
+          
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
+        <!--<div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             <li><a href="#">Help</a></li>
           </ul>
           <form class="navbar-form navbar-right">
             <input type="text" class="form-control" placeholder="ASN ...">
           </form>
-        </div>
+        </div>-->
       <form id="fancy-display">
         <div id="gmaps" style="color:gray;background-color:white;float:left;padding:8px;">Probes Map</div>
         <div id="v4" style="color:white;float:left;padding:8px;">IPv4</div>
@@ -83,7 +86,7 @@
             <div class="panel-heading">IPv4<sup><span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="This shows a detailed IP Routes List"></span></sup></div>
             <!-- Table -->
             <div class="table-responsive">
-              <table id="ipv4" class="display" cellspacing="0" width="100%">
+              <table id="ipv4" class="display" cellspacing="0" width="200">
               </table>
             </div>
             
@@ -94,7 +97,7 @@
             <div class="panel-heading">IPv6<sup><span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="This shows a detailed IP Routes List"></span></sup></div>
             <!-- Table -->
             <div class="table-responsive">
-              <table id="ipv6" class="display" cellspacing="0" width="100%">
+              <table id="ipv6" class="display" cellspacing="0" width="200">
               </table>
             </div>
             
@@ -144,8 +147,8 @@
 
           function myFunction(prefixes,visibility) {
 
-              var header = "<thead><tr><th>IP</th><th>RRC00</th><th>RRC01</th><th>RRC03</th><th>RRC04</th><th>RRC05</th><th>RRC06</th><th>RRC07</th><th>RRC10</th><th>RRC11</th><th>RRC12</th><th>RRC13</th><th>RRC14</th><th>RRC15</th></tr></thead><tbody>";
-              var footer = "</tbody><tfooter><tr><th>IP</th><th>RRC00</th><th>RRC01</th><th>RRC03</th><th>RRC04</th><th>RRC05</th><th>RRC06</th><th>RRC07</th><th>RRC10</th><th>RRC11</th><th>RRC12</th><th>RRC13</th><th>RRC14</th><th>RRC15</th></tr></tfooter>";
+              var header = "<thead><tr><th with=30>IP</th><th with=30>RRC00</th><th with=30>RRC01</th><th with=30>RRC03</th><th with=30>RRC04</th><th with=30>RRC05</th><th with=30>RRC06</th><th with=30>RRC07</th><th with=30>RRC10</th><th with=30>RRC11</th><th with=30>RRC12</th><th with=30>RRC13</th><th with=30>RRC14</th><th with=30>RRC15</th></tr></thead><tbody>";
+              var footer = "</tbody><tfooter><tr><th with=30>IP</th><th with=30>RRC00</th><th with=30>RRC01</th><th with=30>RRC03</th><th with=30>RRC04</th><th with=30>RRC05</th><th with=30>RRC06</th><th with=30>RRC07</th><th with=30>RRC10</th><th with=30>RRC11</th><th with=30>RRC12</th><th with=30>RRC13</th><th with=30>RRC14</th><th with=30>RRC15</th></tr></tfooter>";
 
               var outv4 = header;
               var outv6 = header;
@@ -299,7 +302,7 @@
 
                 v6Func(v6tabelle[i].prefix);
               }
-              setTimeout(timerMethod,5000);
+              /*setTimeout(timerMethod,5000);*/
           }
 
           function changeTableCellipv4(prefix, visibility_prefix) {
@@ -368,6 +371,7 @@
     
     <script src="static/bootstrap/js/bootstrap.min.js"></script>
     <script src="//cdn.datatables.net/1.10.5/js/jquery.dataTables.min.js"></script>
+    <script src="//cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.js"></script>
 
  
     <!-- Javascript to toggle display for a said tab -->
