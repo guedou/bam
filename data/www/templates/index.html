@@ -138,7 +138,8 @@
 
 
 
-            var timerId = setInterval(timerMethod, 60000);    //60,000 milliseconds
+            //var timerId = setInterval(timerMethod, 1000);    //60,000 milliseconds
+            timerMethod();
 
 
           function myFunction(prefixes,visibility) {
@@ -160,7 +161,7 @@
                 outv4 += '<tr><td id=' + id +'>' + prefixes.v4[i] + '</td>';
                 for(j = 0; j < visibility.visibilities.length; j++) {
                   if (visibility.visibilities[j] != null) {
-                    outv4 += '<td style="padding:0px;" id=' + id +'_RC'+ visibility.visibilities[j].name +'>' + visibility.visibilities[j].ipv4_peer_percentage + '</td>';
+                    outv4 += '<td style="padding:0px;" id=' + id + visibility.visibilities[j].name +'>' + visibility.visibilities[j].ipv4_peer_percentage + '</td>';
                   }
                 }
                 outv4 += '</tr>';
@@ -173,7 +174,7 @@
                 outv6 += '<tr><td id=' + id +'>' + prefixes.v6[i] + '</td>';
                 for(j = 0; j < visibility.visibilities.length; j++) {
                   if (visibility.visibilities[j] != null) {
-                    outv6 += '<td  style="padding:0px;" id=' + id +'_RC'+ visibility.visibilities[j].name +'>' + visibility.visibilities[j].ipv6_peer_percentage + '</td>';
+                    outv6 += '<td  style="padding:0px;" id=' + id + visibility.visibilities[j].name +'>' + visibility.visibilities[j].ipv6_peer_percentage + '</td>';
                   }
                 }
                 outv6 += '</tr>';
@@ -199,8 +200,7 @@
                 }
                 ]
               }
-          );
-// #a1d775
+              );
               v6tabelle.DataTable(
               {"columnDefs": [ 
                 {
@@ -213,15 +213,43 @@
                 }
                 ]
               }
-
-          );
+              );
 
               //console.log(tabelle);
           }
 
           function timerMethod() {
-              var v4tabelle = $('#ipv4');
               var i;
+
+              var v4tabelle = $('#ipv4 tbody tr').map(function() {
+                // $(this) is used more than once; cache it for performance.
+                var $row = $(this);
+               
+                // For each row that's "mapped", return an object that
+                //  describes the first and second <td> in the row.
+                return {
+                  prefix: $row.find(':nth-child(1)').text()
+                };
+              }).get();
+
+              for(i = 0; i < v4tabelle.length-1; i++) {
+                if (v4tabelle[i].prefix == "" || v4tabelle[i].prefix == "IP") continue;
+                console.log(v4tabelle[i]);
+                var v4prefix = v4tabelle[i].prefix;
+
+                $.ajax({
+                  method: "GET",
+                  url: '../get_visibility_prefix/' + v4tabelle[i].prefix
+                })
+                  .done(function( msg ) {
+                    //alert( "Data Saved: " + msg );
+                    var myArr = JSON.parse(msg);
+                    //console.log(myArr);
+
+                    changeTableCellipv4(v4prefix , myArr);
+                  });
+              }
+              
 
 
               var v6tabelle = $('#ipv6 tbody tr').map(function() {
@@ -236,8 +264,9 @@
               }).get();
 
               for(i = 0; i < v6tabelle.length-1; i++) {
-                if (v6tabelle[i].prefix == "") continue;
+                if (v6tabelle[i].prefix == "" || v6tabelle[i].prefix == "IP") continue;
                 console.log(v6tabelle[i]);
+                var v6prefix = v6tabelle[i].prefix;
 
                 $.ajax({
                   method: "GET",
@@ -247,25 +276,68 @@
                     //alert( "Data Saved: " + msg );
                     var myArr = JSON.parse(msg);
                     //console.log(myArr);
-                    changeTableCell(v6tabelle[i].prefix, myArr);
+
+                    changeTableCellipv6(v6prefix , myArr);
                   });
               }
-          function changeTableCell(prefix, visibility_prefix) {
-              var v6tabelle = $('#ipv6');
+              setTimeout(timerMethod,60000);
+          }
+
+          function changeTableCellipv4(prefix, visibility_prefix) {
+              var tabelle = $('#ipv4').DataTable();
+              var id = prefix.replace(/\./g,"_");
+              id = id.replace("/","-");
+              id = '#'+id;
+              console.log("V4 Prefix");
+              console.log(prefix);
+
+
+              var j;
+
+              for(j = 0; j < visibility_prefix.visibilities.length; j++) {
+                if (visibility_prefix.visibilities[j] != null) {
+                  //sleep(1);
+
+                  console.log("visibility value:")
+                  console.log(visibility_prefix.visibilities[j].peer_percentage);
+                
+                  var newid = id + visibility_prefix.visibilities[j].name;
+                  console.log("search for id");
+                  console.log(newid);
+                  
+                  if (tabelle.cell(newid).data() != visibility_prefix.visibilities[j].peer_percentage) {
+                      console.log('Change from: ' + tabelle.cell(newid).data() + ' to: ' + visibility_prefix.visibilities[j].peer_percentage + ' Detected!');
+                      tabelle.cell(newid).data(visibility_prefix.visibilities[j].peer_percentage).draw();
+                  }
+                }
+              }
+
+          }
+
+          function changeTableCellipv6(prefix, visibility_prefix) {
+              var tabelle = $('#ipv6').DataTable();
               var id = prefix.replace(/\:/g,"_");
               id = id.replace("/","-");
               id = '#'+id;
-              console.log(v6tabelle.cell(id).data);
 
-              if (v6tabelle.cell('#'+id).data != visibility_prefix.ipv6_peer_percentage) {
 
+              var j;
+
+              for(j = 0; j < visibility_prefix.visibilities.length; j++) {
+                if (visibility_prefix.visibilities[j] != null) {
+                  //sleep(1);
+                  var newid = id + visibility_prefix.visibilities[j].name;
+                  
+                  if (tabelle.cell(newid).data() != visibility_prefix.visibilities[j].peer_percentage) {
+                      console.log('Change from: ' + tabelle.cell(newid).data() + ' to: ' + visibility_prefix.visibilities[j].peer_percentage + ' Detected!');
+                      tabelle.cell(newid).data(visibility_prefix.visibilities[j].peer_percentage).draw();
+                  }
+                }
               }
 
-
           }
 
-              
-          }
+
           </script>
         </div>
       </div>
