@@ -30,7 +30,7 @@ def map_probes(config, map_type="dynamic", radius=30000, wrapper=True):
                                  latitude=latitude,
                                  longitude=longitude,
                                  radius=radius,
-                                 zoom=2,
+                                 zoom=5,
                                  source="get_probes",
                                  name=name,
                                  api_key=config.get("GMAP_API_KEY", "DUMMY-KEY"))

@@ -6,7 +6,7 @@
       var markers{{name}} = [];
 
       // Ease the creation of circles
-      function addCircle(map, latitude, longitude, color, content)
+      function addCircle{{name}}(map, latitude, longitude, color, content)
       {
         // Add a circle
         var infowindow = new google.maps.InfoWindow({ content: content });
@@ -57,9 +57,9 @@
               if (thing)
               {
             {% if source == "get_visibility" %}
-                var circle = addCircle(the_map{{name}}, thing.latitude, thing.longitude, thing.color, thing.name);
+                var circle = addCircle{{name}}(the_map{{name}}, thing.latitude, thing.longitude, thing.color, thing.name);
             {% else %}
-                var circle = addCircle(the_map{{name}}, thing.latitude, thing.longitude, thing.color, ""+thing.id);
+                var circle = addCircle{{name}}(the_map{{name}}, thing.latitude, thing.longitude, thing.color, ""+thing.id);
             {% endif %}
                 new_markers.push(circle);
               }
