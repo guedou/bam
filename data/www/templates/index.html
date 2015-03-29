@@ -31,27 +31,14 @@
 
   <body>
       <!--nav class="navbar navbar-inverse navbar-fixed-top"-->
-    <nav class="navbar navbar-inverse" style="border-bottom-color: white;">
-        <div><a href="#" ><img src="static/logo.png" style="padding-right:15px;padding-left:15px;float:left;background-color:white" height=50></div>
-        <div style="float:left;"><a class="navbar-brand navbar-left" style="background-color:white;color:black;" href="#">BGP Atlas Monitor</a></div>
+    <nav class="navbar navbar-inverse" style="border-bottom-color: white;margin:0px;border:0px;">
 
-      <div class="container-fluid">
-                <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          
-        </div>
-      </div>
-      <div style="background-color:white;float:left;">
-        <div style="width:334px;height:40px;float:left;background-color:#222222;">&nbsp;</div>
-        <div id="gmaps" style="height:40px;color:gray;background-color:white;float:left;padding:8px;">Probes Map</div>
-        <div id="v4" style="height:40px;color:white;float:left;padding:8px;background-color:#222222;">IPv4</div>
-        <div id="v6" style="height:40px;color:white;float:left;padding:8px;background-color:#222222;">IPv6</div>
-      </div>
+
+        <div id="gmaps" style="float:left;height:50px;color:gray;background-color:white;float:left;padding:14px;">Probes Map</div>
+        <div id="v4" style="float:left;height:50px;color:white;float:left;padding:14px;background-color:#222222;">IPv4</div>
+        <div id="v6" style="float:left;height:50px;color:white;float:left;padding:14px;background-color:#222222;">IPv6</div>
+        <div class="navbar-right" style="clear:right;float:right;"><a href="#" ><img src="static/logo.png" style="padding-right:15px;padding-left:15px;float:left;background-color:white" height=50></div>
+        <div class="navbar-right" style="float:right;"><a class="navbar-brand navbar-left" style="background-color:white;color:black;" href="#">BGP Atlas Monitor</a></div>
 
 
         <!--<div id="navbar" class="navbar-collapse collapse">
@@ -72,8 +59,8 @@
         </div> -->
         <!-- <div class="col-sm-9 col-sm-offset-3 col-md-12 col-md-offset-2 main">-->
 
-        <div class="col-sm-9 col-md-12 main">
-          <h1 class="page-header">Dashboard for AS{{ asn }}</h1>
+        <div>
+        <!--div class="col-sm-9 col-md-12 main"-->
   
 {% autoescape false %}
     {{ mape }}
