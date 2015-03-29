@@ -23,9 +23,9 @@ def get_probes (asn, random_data=False):
 
             if random_data:
               index = random.randint(0, 2)
-              probe["color"] = ["#00FF00", "#FF0000", "#FFA500"][index]
+              probe["color"] = ["#008080", "#FF0000", "#FFA500"][index]
             else:
-              probe["color"] = "#00FF00"
+              probe["color"] = "#008080"
 
             probes_list.append({'id':probe['id'], 'country_code':probe['country_code'], 'ipv4':probe['address_v4'], 'ipv6':probe['address_v6'], 'latitude':probe['latitude'], 'longitude':probe['longitude'], "color" : probe["color"]})
 

@@ -36,7 +36,7 @@ def get_visibility(asn, random_data=False):
       doc["ipv4_peers_not_seeing"] = rrc["ipv4_full_table_peers_not_seeing"]
 
       if doc["ipv4_peer_percentage"] == 1.0 and doc["ipv6_peer_percentage"] == 1.0:
-        doc["color"] = "#00FF00"
+        doc["color"] = "#008080"
       elif doc["ipv4_peer_percentage"] == 0.0 and doc["ipv6_peer_percentage"] == 0.0:
         doc["color"] = "#FF0000"
       else:
@@ -44,7 +44,7 @@ def get_visibility(asn, random_data=False):
 
       if random_data:
         index = random.randint(0, 2)
-        doc["color"] = ["#00FF00", "#FF0000", "#FFA500"][index]
+        doc["color"] = ["#008080", "#FF0000", "#FFA500"][index]
 
       rrc_id = int(doc["name"][3:])
 
