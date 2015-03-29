@@ -91,7 +91,7 @@ def index(config):
   asn = config.get("asn", "No ASN provided !")
 
   rendered_map_probes = map_probes(config, "dynamic")
-  #rendered_map_collectors = map_collectors(config, "dynamic")
+  rendered_map_collectors = map_collectors(config, "dynamic")
 
   value = flask.render_template("index.html", asn=asn,
                                               map_probes=rendered_map_probes,
