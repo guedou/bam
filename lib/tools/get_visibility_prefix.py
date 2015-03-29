@@ -1,8 +1,8 @@
 # Retrieve the visibilty information
 
-import requests, json
+import requests, json, random
 
-def get_visibility_prefix(prefix):
+def get_visibility_prefix(prefix, random_data=False):
   """Return a JSON document representing the visibility of a prefix from each RIS collector."""
 
   URL = "https://stat.ripe.net/data/visibility/data.json?resource=%s" % prefix
@@ -34,6 +34,9 @@ def get_visibility_prefix(prefix):
       doc["longitude"] = rrc["probe"]["longitude"]
       doc["peer_percentage"] = peer_percentage
       doc["peers_not_seeing"] = rrc["ip%s_full_table_peers_not_seeing" % addr_type]
+
+      if random_data:
+        doc["peer_percentage"] = random.randint(1, 100) / 100.
 
       rrc_id = int(doc["name"][3:])
 

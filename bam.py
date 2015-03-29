@@ -81,7 +81,8 @@ def flask_get_visibility(asn=None):
 def flask_get_visibility_prefix(prefix):
   """Return the visibility of a prefix as seen by RIPE stat."""
 
-  visibilities = get_visibility_prefix(prefix)
+  random_data = app.config["CONFIG"].get("RANDOM_DATA", False)
+  visibilities = get_visibility_prefix(prefix, random_data)
 
   doc = {}
   doc["prefix"] = prefix
