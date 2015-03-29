@@ -30,10 +30,13 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <!--nav class="navbar navbar-inverse navbar-fixed-top"-->
+    <nav class="navbar navbar-inverse" style="border-bottom-color: white;">
+        <div><a href="#" ><img src="static/logo.png" style="padding-right:15px;padding-left:15px;float:left;background-color:white" height=50></div>
+        <div style="float:left;"><a class="navbar-brand navbar-left" style="background-color:white;color:black;" href="#">BGP Atlas Monitor</a></div>
+
       <div class="container-fluid">
-        <a class="navbar-brand navbar-right" href="#">BAM - BGP Atlas Monitor</a>
-        <div class="navbar-header">
+                <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
@@ -42,6 +45,15 @@
           </button>
           
         </div>
+      </div>
+      <div style="background-color:white;float:left;">
+        <div style="width:334px;height:40px;float:left;background-color:#222222;">&nbsp;</div>
+        <div id="gmaps" style="height:40px;color:gray;background-color:white;float:left;padding:8px;">Probes Map</div>
+        <div id="v4" style="height:40px;color:white;float:left;padding:8px;background-color:#222222;">IPv4</div>
+        <div id="v6" style="height:40px;color:white;float:left;padding:8px;background-color:#222222;">IPv6</div>
+      </div>
+
+
         <!--<div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             <li><a href="#">Help</a></li>
@@ -50,16 +62,7 @@
             <input type="text" class="form-control" placeholder="ASN ...">
           </form>
         </div>-->
-      <form id="fancy-display">
-        <div id="gmaps" style="color:gray;background-color:white;float:left;padding:8px;">Probes Map</div>
-        <div id="v4" style="color:white;float:left;padding:8px;">IPv4</div>
-        <div id="v6" style="color:white;float:left;padding:8px;">IPv6</div>
-      </form>
-      </div>
     </nav>
-
-        <br />
-  <img src="/logo.png">
     <div class="container-fluid">
       <div class="row">
         <!-- <div class="col-sm-3 col-md-2 sidebar">
@@ -68,9 +71,6 @@
           </ul>
         </div> -->
         <!-- <div class="col-sm-9 col-sm-offset-3 col-md-12 col-md-offset-2 main">-->
-      <br />
-      <br />
-      <br />  
 
         <div class="col-sm-9 col-md-12 main">
           <h1 class="page-header">Dashboard for AS{{ asn }}</h1>
@@ -84,7 +84,7 @@
             <div class="panel-heading">IPv4<sup><span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="This shows a detailed IP Routes List"></span></sup></div>
             <!-- Table -->
             <div class="table-responsive">
-              <table id="ipv4" class="display" cellspacing="0" width="200">
+              <table id="ipv4" class="display compact" cellspacing="0" width="200">
               </table>
             </div>
             
@@ -95,7 +95,7 @@
             <div class="panel-heading">IPv6<sup><span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="This shows a detailed IP Routes List"></span></sup></div>
             <!-- Table -->
             <div class="table-responsive">
-              <table id="ipv6" class="display" cellspacing="0" width="200">
+              <table id="ipv6" class="display compact" cellspacing="0" width="200">
               </table>
             </div>
             
@@ -377,15 +377,15 @@
     $("#gmaps").click(function() {
       if ($("#gmaps-pane").css('display') != "none")
       {
-        $("#gmaps").css('background-color', '');
+        $("#gmaps").css('background-color', '#222222;');
         $("#gmaps").css('color', 'white');
         
       } else {
         $("#gmaps").css('background-color', 'white');
         $("#gmaps").css('color', 'gray');
-        $("#v4").css('background-color', '');
+        $("#v4").css('background-color', '#222222');
         $("#v4").css('color', 'white');
-        $("#v6").css('background-color', '');
+        $("#v6").css('background-color', '#222222');
         $("#v6").css('color', 'white');
         $("#v4-pane").css('display', 'none');
         $("#v6-pane").css('display', 'none');
@@ -396,14 +396,14 @@
     $("#v4").click(function() {
       if ($("#v4-pane").css('display') != "none")
       {
-        $("#v4").css('background-color', '');
+        $("#v4").css('background-color', '#222222');
         $("#v4").css('color', 'white');
       } else {
         $("#v4").css('background-color', 'white');
         $("#v4").css('color', 'gray');
-        $("#gmaps").css('background-color', '');
+        $("#gmaps").css('background-color', '#222222');
         $("#gmaps").css('color', 'white');
-        $("#v6").css('background-color', '');
+        $("#v6").css('background-color', '#222222');
         $("#v6").css('color', 'white');
         $("#gmaps-pane").css('display', 'none');
         $("#v6-pane").css('display', 'none');
@@ -414,14 +414,14 @@
     $("#v6").click(function() {
       if ($("#v6-pane").css('display') != "none")
       {
-        $("#v6").css('background-color', '');
+        $("#v6").css('background-color', '#222222');
         $("#v6").css('color', 'white');
       } else {
         $("#v6").css('background-color', 'white');
         $("#v6").css('color', 'gray');
-        $("#gmaps").css('background-color', '');
+        $("#gmaps").css('background-color', '#222222');
         $("#gmaps").css('color', 'white');
-        $("#v4").css('background-color', '');
+        $("#v4").css('background-color', '#222222');
         $("#v4").css('color', 'white');
         $("#gmaps-pane").css('display', 'none');
         $("#v4-pane").css('display', 'none');
