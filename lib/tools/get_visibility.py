@@ -13,7 +13,11 @@ def get_visibility(asn, random_data=False):
     print e
     return None
 
-  ret = [None] * 16
+  # Automatically adjust the size of the returned list
+  collectors = [element["probe"]["name"] for element in data["data"]["visibilities"]]
+  collectors_int = [int(name[3:]) for name in collectors]
+  ret = [None] * (max(collectors_int)+1)
+
   for rrc in data["data"]["visibilities"]:
       ipv4_full_table_peer_count = rrc["ipv4_full_table_peer_count"]
       ipv4_full_table_peers_not_seeing_count = len(rrc["ipv4_full_table_peers_not_seeing"])

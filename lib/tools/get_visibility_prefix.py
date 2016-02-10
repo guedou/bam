@@ -20,7 +20,11 @@ def get_visibility_prefix(prefix, random_data=False):
   if ":" in prefix:
     addr_type = "v6"
 
-  ret = [None] * 16
+  # Automatically adjust the size of the returned list
+  collectors = [element["probe"]["name"] for element in data["data"]["visibilities"]]
+  collectors_int = [int(name[3:]) for name in collectors]
+  ret = [None] * (max(collectors_int)+1)
+
   for rrc in data["data"]["visibilities"]:
       full_table_peer_count = rrc["ip%s_full_table_peer_count" % addr_type]
       full_table_peers_not_seeing_count = len(rrc["ip%s_full_table_peers_not_seeing" % addr_type])
