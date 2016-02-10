@@ -3,7 +3,7 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Use a small Debian box
-  config.vm.box = "chef/debian-7.6"
+  config.vm.box = "debian/jessie64"
 
   # Prepare the Vm
   config.vm.define "bam-vm" do |machine|
