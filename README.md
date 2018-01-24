@@ -14,7 +14,7 @@ Command line tools are also available in order to manipulating ASes information.
 
 The BAM team
   Guillaume Valadon
-  Francois Contant
+  Francois Contat
   Mathias Handsche
   Thomas Holterbach
 
